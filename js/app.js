@@ -9,30 +9,68 @@
 
 
 $(document).ready(function(){
-  // Cache the Window object
+  app = new torApp();
+}); 
+
+//ie fix
+document.createElement("article");
+document.createElement("section");
+
+var torApp = function() {
+  var self = this, 
+    h = 1000,
+    w = document.width,
+    min = -1000,
+    max = 0,
+    posWas,
+    direction = "down";
+  
   $window = $(window);
     $('section[data-type="background"]').each(function(){
       var $bg = $(this);
       $(window).scroll(function() {
-      
-        var yPos = -($window.scrollTop() / $bg.data('speed')); 
+        
+        var pos = $(window).scrollTop(); //position of the scrollbar
+        
+        if(pos > posWas){ direction = "down"; }
+        if(pos < posWas){ direction = "up"; }
+        posWas = pos;
+        
+        var yPos = -($window.scrollTop() / $bg.data('speed'));
         var coords = '50% '+ yPos + 'px';
         
-        //console.log('ypos', yPos)
-        // Move the background
+        if ( self.visibleMap ) {
+          if ($('#'+self.visibleMap).is(':appeared')) {
+            
+            var m = parseInt($('#'+self.visibleMap).css('margin-top').replace(/px/, ''));
+            
+            if (direction === 'down') {
+              m = m + 3;
+              if ( m >= max ) m = max;
+            } else {
+              m = m - 3;
+              if ( m <= min ) m = min;
+            }
+            
+            $('#'+self.visibleMap).css('margin-top', m+'px');
+            
+          }
+        }
+        
         $bg.css({ backgroundPosition: coords });
       
       });
     });
     
-    var app = new torApp();
     
-    $('.maps').appear();
-    $('.maps').on('appear', function() {
-      var id = $(this).attr('id');
+    
+    $('.about').appear();
+    $('.about').on('appear', function() {
+      var id = $(this).children('.maps').attr('id');
       
       //TODO add back in
       //$('#'+id+'_counties').show();
+      self.visibleMap = id;
       app.LoadPoints( id );
     });
     
@@ -41,21 +79,10 @@ $(document).ready(function(){
       $('#'+id+'_counties').hide();
       app.RemovePoints( id );
     }); 
-      
-}); 
-
-//ie fix
-document.createElement("article");
-document.createElement("section");
-
-var torApp = function() {
-  var self = this;
-  var h = 1000;
-  var w = document.width;
   
   this.projection = d3.geo.albers()
-    .scale(800)
-    .center([5, 38])
+    .scale(1300)
+    .center([2, 38])
     .translate([w / 2, h / 2]);
 
   this.path = d3.geo.path()
