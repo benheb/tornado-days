@@ -22,6 +22,11 @@ body{
   fill:#444444;
 }
 
+.states {
+  stroke:#333333;
+  fill:#444444;
+}
+
 .world {
   stroke:#333;
   stroke-width:0.3;
@@ -38,7 +43,8 @@ body{
     position: relative; 
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
 }
-#about { 
+
+.about { 
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNjY2MiPjwvcmVjdD4KPC9zdmc+");
   height: 1000px;
   margin: 0 auto; 
@@ -61,15 +67,18 @@ body{
   text-align: center;
 }
 
-#about article { 
-  height: 458px; 
-  position: absolute; 
-  text-indent: -9999px; 
-  top: 291px; 
-  width: 100%; 
+#home #intro { 
+  height: 150px;
+  position: absolute;
+  top: 443px;
+  width: 100%;
+  font-size: 28px;
+  font-weight: bold;
+  font-family: fantasy;
+  text-align: center;
 }
 
-
-
+.maps {
+}
 
 
