@@ -78,8 +78,7 @@ body{
   text-align: center;
 }
 
-.maps {
-  margin-top:-1000px;
+#item_one {
+  background: url(../images/supercell.jpg) 50% 0 no-repeat fixed;  
 }
-
 

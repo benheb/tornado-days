@@ -9,6 +9,9 @@
 
 
 $(document).ready(function(){
+  var height = $(window).height() + 100;
+  $('.about').css('height', height+'px');
+  
   app = new torApp();
 }); 
 
@@ -39,24 +42,21 @@ var torApp = function() {
         var yPos = -($window.scrollTop() / $bg.data('speed'));
         var coords = '50% '+ yPos + 'px';
         
-        if ( self.visibleMap ) {
-          if ($('#'+self.visibleMap).is(':appeared')) {
-            
-            var m = parseInt($('#'+self.visibleMap).css('margin-top').replace(/px/, ''));
-            
-            if (direction === 'down') {
-              m = m + 3;
-              if ( m >= max ) m = max;
-            } else {
-              m = m - 3;
-              if ( m <= min ) m = min;
-            }
-            
-            $('#'+self.visibleMap).css('margin-top', m+'px');
-            
-          }
+        /*
+         * cool transitions
+        var m = parseInt($('#map_one').css('margin-top').replace(/px/, ''));
+        
+        if (direction === 'down') {
+          m = m + 4;
+          if ( m >= max ) m = max;
+        } else {
+          //m = m - 3;
+          //if ( m <= min ) m = min;
         }
         
+        $('#map_one').css('margin-top', m+'px');
+        */
+       
         $bg.css({ backgroundPosition: coords });
       
       });
@@ -70,7 +70,6 @@ var torApp = function() {
       
       //TODO add back in
       //$('#'+id+'_counties').show();
-      self.visibleMap = id;
       app.LoadPoints( id );
     });
     
@@ -81,8 +80,8 @@ var torApp = function() {
     }); 
   
   this.projection = d3.geo.albers()
-    .scale(1300)
-    .center([2, 38])
+    .scale(1600)
+    .center([20, 38])
     .translate([w / 2, h / 2]);
 
   this.path = d3.geo.path()
