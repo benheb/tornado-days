@@ -33,6 +33,37 @@ body{
   fill: rgb(241, 241, 241);
 }
 
+.date {
+  background: #CCC;
+  opacity: 0.8;
+  padding: 5px;
+  color: #000;
+  margin-bottom: 10px;
+  display: block;
+  text-align: center;
+}
+
+.stats {
+  width: 325px;
+  overflow: hidden;
+}
+
+.stat {
+  background: #CCC;
+  opacity: 0.8;
+  padding: 5px;
+  color: #000;
+  margin-bottom: 10px;
+  display: block;
+  float: left;
+  width: 95px;
+  text-align: center;
+  margin-right: 3px;
+}
+
+.stat .title {
+  font-size:10pt;
+}
 
 #home { 
   background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed; 
