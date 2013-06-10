@@ -37,7 +37,7 @@ body{
   background: #CCC;
   opacity: 0.8;
   padding: 5px;
-  color: #000;
+  color: rgb(0, 136, 196); /*was #000 */
   margin-bottom: 10px;
   display: block;
   text-align: center;
@@ -63,6 +63,11 @@ body{
 
 .stat .title {
   font-size:10pt;
+  color:rgb(0, 48, 68);
+}
+
+.number {
+  color:rgb(0, 48, 68);
 }
 
 #home { 
@@ -86,7 +91,7 @@ body{
 }
 
 .map-blurb {
-  color: #000;
+  color: rgb(79, 96, 114);
   z-index: 100;
   position: absolute;
   top: 20px;
@@ -97,8 +102,8 @@ body{
   font-size: 22pt;
   opacity: 0.8;
   height: 745px;
-  background: url(../images/blurb-tor.png) center fixed;
   font-weight: bold;
+  overflow:hidden;
 }
 
 .storm-reports {
@@ -108,10 +113,11 @@ body{
 #info-window {
   display:none;
   background:#EEE;
-  opacity:0.8;
+  opacity:0.9;
   padding:10px;
   position:absolute;
   z-index:200;
+  color:#000;
 }
 
 /* Introduction */
@@ -142,3 +148,34 @@ body{
   /*background: url(../images/supercell.jpg) 50% 0 no-repeat fixed;*/  
 }
 
+#blurb-one {
+  background: url(../images/blurb-tor.png) center fixed;
+}
+
+#blurb-two {
+  background: url(../images/supercell05.png) right fixed; 
+}
+
+#blurb-three {
+  background: url(../images/may-22-2011-1.png) center fixed;
+}
+
+#blurb-four {
+  background: url(../images/may-3-1999-1.png) right fixed; 
+}
+
+#blurb-five {
+  background: url(../images/nov-22-1992.png) center fixed;
+}
+
+#blurb-six {
+  background: url(../images/1965-2.png) right fixed; 
+}
+
+#blurb-seven {
+  background: url(../images/blurb-tor.png) center fixed;
+}
+
+#blurb-eight {
+  background: url(../images/supercell05.png) right fixed; 
+}

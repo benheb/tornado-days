@@ -66,9 +66,10 @@ var torApp = function() {
         */  
         var yPos = -($window.scrollTop() / $bg.data('speed'));
         var coords = '50% '+ yPos + 'px';
+        var bcoords = 'right '+yPos + 'px';
         
         $bg.css({ backgroundPosition: coords });
-        $blurb.css({ backgroundPosition: coords });
+        $blurb.css({ backgroundPosition: bcoords });
         
         
       });
@@ -197,6 +198,9 @@ torApp.prototype.LoadPoints = function( map ) {
     .row(function(d) { return { date: d.Date, scale: d.Fujita, county: d.County1,
       state: d.State1, latitude: d.TouchdownLat, longitude: d.TouchdownLon, damages: d.Damage, injuries: d.Injuries, fatalities: d.Fatalities}; })
     .get(function(error, rows) {
+      var injured = 0;
+      var cost = 0;
+      var count = 0;
       
       var strongTors = self[ map ].append('g');
 
@@ -212,6 +216,17 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr('class', 'storm-reports')
         .attr('opacity', 0.5)
         .attr('id', map+'_graphic')
+        .attr('d', function(d) {
+          injured = injured + parseInt( d.injuries );
+          
+          //TODO calculate cost
+          var c = parseInt( d.damages.split('-')[ 0 ].replace( /\$/, '') );
+          cost = ( isNaN( c ) ) ? cost : cost + c;
+          
+          //number of tors
+          count++;
+          
+        })
         .attr('r', function(d) {
           var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
           return size;
@@ -221,21 +236,24 @@ torApp.prototype.LoadPoints = function( map ) {
             .attr('d', self.hover( d, map ))
             .transition()
             .duration(400)
+              .attr('opacity', 0.1)
               .attr('r', function() { 
-                var size = ( d.scale == undefined ) ? 1 : self.scales[d.scale] + 6;
+                var size = ( d.scale == undefined ) ? 1 : self.scales[d.scale] + 14;
                 return size; 
               })
-        })
-        .on('mouseout', function(d) { 
-          d3.select(this)
             .transition()
-            .duration(100)
+            .duration(400)
+              .attr('opacity', 0.5)
               .attr('r', function() { 
                 var size = ( d.scale == undefined ) ? 1 : self.scales[d.scale];
                 return size; 
               })
-        })
+        });
           
+      //Stats
+      $( '.'+map+' .injured-by-tors .number' ).html( injured );
+      $( '.'+map+' .number-of-tors .number' ).html( count );
+      
       var reports = self[ map ].append('g');
 
       $('#tornado-count .count').html(rows.length);
