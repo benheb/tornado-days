@@ -96,6 +96,7 @@ var torApp = function() {
   this.projection = d3.geo.albers()
     .scale(1700)
     .center([20, 33])
+    .clipAngle(90)
     .translate([w / 2, h / 2]);
 
   this.path = d3.geo.path()
@@ -213,7 +214,7 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr("fill", "#FFFFFF")
         .attr('stroke', "#ff3322")
         .attr('stroke-width', 0.6)
-        .attr('class', 'storm-reports')
+        .attr('class', 'storm-reports-large')
         .attr('opacity', 0.5)
         .attr('id', map+'_graphic')
         .attr('d', function(d) {
@@ -321,4 +322,77 @@ torApp.prototype.exit = function() {
       .remove();
   $('#info-window').fadeOut(600);
   $('#info-window').remove();
+}
+
+torApp.prototype.ortho = function() {
+  var self = this, 
+    h = 1000,
+    w = document.width;
+    
+  this.projection = d3.geo.orthographic()
+    .scale(500)
+    .translate([ (w - 300) / 2, h / 2])
+    .clipAngle(90)
+    .rotate([90, 0, 0])
+    .precision(.1);
+    
+  this.path = d3.geo.path()
+    .projection(this.projection);
+    
+  d3.selectAll('path')
+    //.transition()
+    //.duration(900)
+    .attr('d', app.path);
+    
+  d3.selectAll('.storm-reports-large')
+    .transition()
+    .duration(900)
+    .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";})
+    .attr('r', function(d) {
+        var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale] / 2;
+        return size;
+    });
+    
+    d3.selectAll('.storm-reports')
+      .transition()
+      .duration(900)
+      .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";});
+    
+  $('.world').css('fill', '#333');
+}
+
+torApp.prototype.albers = function() {
+  var self = this, 
+    h = 1000,
+    w = document.width;
+    
+  this.projection = d3.geo.albers()
+    .scale(1700)
+    .center([20, 33])
+    .clipAngle(90)
+    .translate([w / 2, h / 2]);
+
+  this.path = d3.geo.path()
+    .projection(this.projection);
+    
+  d3.selectAll('path')
+    //.transition()
+    //.duration(900)
+    .attr('d', app.path);
+    
+  d3.selectAll('.storm-reports-large')
+    .transition()
+    .duration(900)
+    .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";})
+    .attr('r', function(d) {
+        var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
+        return size;
+      });
+    
+    d3.selectAll('.storm-reports')
+      .transition()
+      .duration(900)
+      .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";});
+    
+  $('.world').css('fill', 'none');
 }
