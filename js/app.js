@@ -30,6 +30,7 @@ var torApp = function() {
     posWas,
     direction = "down";
   
+  this.can_scroll = false;
   this.intro();
   
   $window = $(window);
@@ -37,9 +38,24 @@ var torApp = function() {
       var $bg = $(this);
       var $text = $('.map-blurb-text');
       
-      $(window).scroll(function() {
+      $(window).scroll(function(e) {
+        
+        if ( !self.can_scroll ) {
+          $('body').css('overflow', 'hidden');
+          return;
+        }
         
         var pos = $(window).scrollTop(); //position of the scrollbar
+        
+        if ( pos > 10 ) {
+          $('#intro-map').fadeOut('slow', function() {
+            $('#intro-map-window .inner').css('background', 'none');  
+          });
+        } else {
+          $('#intro-map').fadeIn('slow', function() {
+            $('#intro-map-window .inner').css('background', 'none');  
+          });
+        }
         
         var active = self.visible || 'map_one';
         var $blurb = $('.map-blurb.'+active);

@@ -38,8 +38,8 @@ path {
   stroke-linejoin: round;
 }
 
-.land {
-  fill: #444; 
+.intro-land {
+  fill: #777; 
 }
 
 .sphere,

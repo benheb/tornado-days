@@ -1,6 +1,8 @@
 torApp.prototype.intro = function() {
   var self = this;
   
+  this.can_scroll = false;
+  
   var width = $(window).width(),
       height = $(window).height();
   
@@ -40,7 +42,7 @@ torApp.prototype.intro = function() {
     console.log('ob', world)
     svg.insert("path", ".graticule")
         .datum(topojson.feature(world, world.objects.world))
-        .attr("class", "land")
+        .attr("class", "intro-land")
         .attr("d", path);
   });
   
@@ -120,10 +122,10 @@ torApp.prototype.intro = function() {
         })
         .attr("fill", "#FFFFFF")
         .attr('stroke', "#ff3322")
-        .attr('stroke-width', 0.2)
+        .attr('stroke-width', 0.5)
         .attr('opacity', 0)
         .attr('r', function(d) { 
-          var size = ( d.scale == undefined ) ? 1 : scales[d.scale];
+          var size = ( d.scale == undefined ) ? 1 : scales[d.scale] + 2;
           return size; 
         })
         .transition()
@@ -197,7 +199,7 @@ torApp.prototype.intro = function() {
    }
    
    function showWindow() {
-     
+     self.can_scroll = true;
      $('#intro-map-window').fadeIn();
       setTimeout(function() {
         //$('#intro-map').fadeOut('slow', function() {
