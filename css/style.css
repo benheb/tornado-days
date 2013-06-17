@@ -33,6 +33,48 @@ body{
   fill: rgb(241, 241, 241);
 }
 
+path {
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.land {
+  fill: #444; 
+}
+
+.sphere,
+.graticule {
+  stroke: #aaa;
+  stroke-width:0.3;
+}
+
+.equator {
+  stroke: red;
+  stroke-width: 2px;
+}
+
+
+#intro-map {
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  z-index: 100;
+  background:#FFF;
+}
+
+#intro-map-window {
+  display:none;
+  height: 191px;
+  z-index: 200;
+  position: absolute;
+  top: 291px;
+  width: 100%;
+  font-size: 166px;
+  font-weight: bold;
+  font-family: fantasy;
+  text-align: center;
+}
+
 .date {
   background: #CCC;
   opacity: 0.8;
@@ -122,21 +164,19 @@ body{
 
 /* Introduction */
 
-#home article { 
-  height: 458px;
-  position: absolute;
-  top: 291px;
-  width: 100%;
-  font-size: 166px;
-  font-weight: bold;
-  font-family: fantasy;
-  text-align: center;
+#intro-map-window .inner {
+  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
+  width: 870px;
+  margin: auto;
+  height: 190px;
 }
 
-#home #intro { 
+#intro-map-window article { 
+  height: 152px;
+}
+
+#intro-map-window #intro { 
   height: 150px;
-  position: absolute;
-  top: 443px;
   width: 100%;
   font-size: 28px;
   font-weight: bold;
@@ -149,7 +189,7 @@ body{
 }
 
 #blurb-one {
-  background: url(../images/blurb-tor.png) center fixed;
+  background: url(../images/blurb-tor.png) right fixed;
 }
 
 #blurb-two {
@@ -157,7 +197,7 @@ body{
 }
 
 #blurb-three {
-  background: url(../images/may-22-2011-1.png) center fixed;
+  background: url(../images/may-22-2011-1.png) right fixed;
 }
 
 #blurb-four {
@@ -165,7 +205,7 @@ body{
 }
 
 #blurb-five {
-  background: url(../images/nov-22-1992.png) center fixed;
+  background: url(../images/nov-22-1992.png) right fixed;
 }
 
 #blurb-six {
@@ -173,7 +213,7 @@ body{
 }
 
 #blurb-seven {
-  background: url(../images/blurb-tor.png) center fixed;
+  background: url(../images/blurb-tor.png) right fixed;
 }
 
 #blurb-eight {

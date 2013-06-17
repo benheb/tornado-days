@@ -30,47 +30,26 @@ var torApp = function() {
     posWas,
     direction = "down";
   
+  this.intro();
+  
   $window = $(window);
     $('section[data-type="background"]').each(function(){
       var $bg = $(this);
-      var $blurb = $('.map-blurb');
       var $text = $('.map-blurb-text');
       
       $(window).scroll(function() {
         
         var pos = $(window).scrollTop(); //position of the scrollbar
         
-        /*
-         * ANIMATE MAP
-         if(pos > posWas){ direction = "down"; }
-        if(pos < posWas){ direction = "up"; }
-        posWas = pos;
+        var active = self.visible || 'map_one';
+        var $blurb = $('.map-blurb.'+active);
         
-        if (direction === 'down') {
-          m++;
-          if ( m >= max ) m = max;
-          self.animate( m );
-        } else {
-          m = 0;
-        }
-        
-        if (pos >= $('#home').height()) {
-          $('#item_one').css({
-            'overflow-y': 'scroll'
-          });
-        } else if ( pos < $('#home').height()) {
-          $('#item_one').css({
-            'overflow-y': 'hidden'
-          });
-        }
-        */  
         var yPos = -($window.scrollTop() / $bg.data('speed'));
         var coords = '50% '+ yPos + 'px';
         var bcoords = 'right '+yPos + 'px';
         
         $bg.css({ backgroundPosition: coords });
-        $blurb.css({ backgroundPosition: bcoords });
-        
+        //$blurb.css({ backgroundPosition: bcoords });
         
       });
     });
@@ -83,7 +62,7 @@ var torApp = function() {
       
       //TODO add back in
       //$('#'+id+'_counties').show();
-      //self.visible = id;
+      self.visible = id;
       app.LoadPoints( id );
     });
     
@@ -120,7 +99,7 @@ var torApp = function() {
      5: 19
   }
   
-  this.createMap();
+  //this.createMap();
 }
 
 torApp.prototype.animate = function( m ) {
@@ -143,18 +122,18 @@ torApp.prototype.createMap = function () {
     d3.json("data/world.json", function(error, world) {
       //console.log('world', world)
       self[ map ].insert("path")
-        .datum(topojson.object(world, world.objects.world))
+        .datum(topojson.feature(world, world.objects.world))
         .attr('class', 'world')
         .attr("d", self.path);
       
       self[ map ].insert("path")
-        .datum(topojson.object(world, world.objects.states))
+        .datum(topojson.feature(world, world.objects.states))
         .attr('class', 'states')
         .attr('id', map+'_states')
         .attr("d", self.path);
         
       self[ map ].insert("path")
-        .datum(topojson.object(world, world.objects.water))
+        .datum(topojson.feature(world, world.objects.water))
         .attr('class', 'lakes')
         .attr("d", self.path);
         
@@ -328,22 +307,19 @@ torApp.prototype.ortho = function() {
   var self = this, 
     h = 1000,
     w = document.width;
-    
-  this.projection = d3.geo.orthographic()
-    .scale(500)
-    .translate([ (w - 300) / 2, h / 2])
-    .clipAngle(90)
-    .rotate([90, 0, 0])
-    .precision(.1);
-    
-  this.path = d3.geo.path()
-    .projection(this.projection);
-    
-  d3.selectAll('path')
-    //.transition()
-    //.duration(900)
-    .attr('d', app.path);
-    
+  
+  var options = [
+    {name: "Orthographic", projection: d3.geo.orthographic()},
+    {name: "Albers", projection: d3.geo.albers().scale(700).center([20, 33]).translate([w / 2, h / 2])}
+  ];
+  
+  var p = options[0];
+  var proj = options[1];
+  
+  d3.selectAll("path").transition()
+      .duration(750)
+      .attrTween("d", self.projectionTween(proj.projection, projection = p.projection ));
+  /*
   d3.selectAll('.storm-reports-large')
     .transition()
     .duration(900)
@@ -357,42 +333,33 @@ torApp.prototype.ortho = function() {
       .transition()
       .duration(900)
       .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";});
-    
+    */
   $('.world').css('fill', '#333');
 }
 
-torApp.prototype.albers = function() {
-  var self = this, 
-    h = 1000,
-    w = document.width;
-    
-  this.projection = d3.geo.albers()
-    .scale(1700)
-    .center([20, 33])
-    .clipAngle(90)
-    .translate([w / 2, h / 2]);
+torApp.prototype.projectionTween = function(projection0, projection1) {
+  return function(d) {
+    var t = 0;
+    var height = 1000;
+    var width = document.width;
 
-  this.path = d3.geo.path()
-    .projection(this.projection);
-    
-  d3.selectAll('path')
-    //.transition()
-    //.duration(900)
-    .attr('d', app.path);
-    
-  d3.selectAll('.storm-reports-large')
-    .transition()
-    .duration(900)
-    .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";})
-    .attr('r', function(d) {
-        var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
-        return size;
-      });
-    
-    d3.selectAll('.storm-reports')
-      .transition()
-      .duration(900)
-      .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";});
-    
-  $('.world').css('fill', 'none');
+    var projection = d3.geo.projection(project)
+        .scale(1)
+        .translate([width / 2, height / 2]);
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+    function project(λ, φ) {
+      λ *= 180 / Math.PI, φ *= 180 / Math.PI;
+      var p0 = projection0([λ, φ]), p1 = projection1([λ, φ]);
+      return [(1 - t) * p0[0] + t * p1[0], (1 - t) * -p0[1] + t * -p1[1]];
+    }
+
+    return function(_) {
+      t = _;
+      return path(d);
+    };
+  };
 }
+
