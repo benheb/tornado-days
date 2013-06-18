@@ -6,8 +6,6 @@ torApp.prototype.intro = function() {
   var width = $(window).width(),
       height = $(window).height();
   
-  $('#intro-map').css( { 'width': width+'px', 'height': height+'px' } );
-  
   var projection = interpolatedProjection(
       d3.geo.orthographic()
           .rotate([10, -10])
@@ -100,6 +98,7 @@ torApp.prototype.intro = function() {
        5: 4
     }
     d3.csv( 'data/apr-26-27-28-2011.csv' )
+    //d3.csv( 'data/may-24-26-2011.csv' )
     .row(function(d) { return { date: d.Date, scale: d.Fujita, county: d.County1,
       state: d.State1, latitude: d.TouchdownLat, longitude: d.TouchdownLon, damages: d.Damage, injuries: d.Injuries, fatalities: d.Fatalities}; })
     .get(function(error, rows) {
@@ -121,7 +120,7 @@ torApp.prototype.intro = function() {
           return "translate(" + projection([d.longitude,lat]) + ")";
         })
         .attr("fill", "#FFFFFF")
-        .attr('stroke', "#ff3322")
+        .attr('stroke', "#122133")
         .attr('stroke-width', 0.5)
         .attr('opacity', 0)
         .attr('r', function(d) { 
@@ -182,7 +181,7 @@ torApp.prototype.intro = function() {
         };
         
         var line = svg.append("line")
-          .attr("stroke", '#444')
+          .attr("stroke", '#CCC')
           .attr('stroke-width', 2)
           .attr("x1", lines[ cnt ][ 0 ].x1)
           .attr("y1", lines[ cnt ][ 0 ].y1)
@@ -201,6 +200,7 @@ torApp.prototype.intro = function() {
    function showWindow() {
      self.can_scroll = true;
      $('#intro-map-window').fadeIn();
+     $('#scroll-tip-container').show();
       setTimeout(function() {
         //$('#intro-map').fadeOut('slow', function() {
         //  $('#intro-map-window .inner').css('background', 'none');  

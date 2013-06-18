@@ -39,7 +39,7 @@ path {
 }
 
 .intro-land {
-  fill: #777; 
+  fill: #38424e; 
 }
 
 .sphere,
@@ -55,11 +55,11 @@ path {
 
 
 #intro-map {
-  height: 500px;
-  width: 500px;
+  height: 800px;
+  width: 1000px;
   position: absolute;
   z-index: 100;
-  background:#FFF;
+  background:#FEFEFE;
 }
 
 #intro-map-window {
@@ -74,6 +74,47 @@ path {
   font-family: fantasy;
   text-align: center;
 }
+
+@-webkit-keyframes swinging {
+    0% {
+        -webkit-transform: rotate(-5deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(5deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(-5deg);
+    }
+}
+
+#scroll-tip-container {
+  display:none;
+  padding-top: 100px;
+  -webkit-animation: swinging 3s infinite ease-in-out;
+  background: #ddd;
+  width: 4px;
+  -webkit-transform-origin: top;
+  margin: 0 auto;
+  -webkit-border-radius: 1000px;
+  
+}
+
+
+.pendulum {
+  position: relative;
+  background: #ddd;
+  color: #333;
+  width: 60px;
+  height: 60px;
+  line-height: 63px;
+  -webkit-border-radius: 1000px;
+  margin: 0 0 0 -28px;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
 
 .date {
   background: #CCC;

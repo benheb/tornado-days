@@ -13,6 +13,11 @@ $(document).ready(function(){
   $('.about').css('height', height+'px');
   $('#home').css('height', height+'px');
   
+  var w = $(window).width(),
+      h = $(window).height();
+  
+  $('#intro-map').css( { 'width': w+'px', 'height': h+'px' } );
+  
   app = new torApp();
 }); 
 
@@ -36,6 +41,7 @@ var torApp = function() {
   $window = $(window);
     $('section[data-type="background"]').each(function(){
       var $bg = $(this);
+      var $wbg = $('#intro-map-window .inner.wbg');
       var $text = $('.map-blurb-text');
       
       $(window).scroll(function(e) {
@@ -49,8 +55,9 @@ var torApp = function() {
         
         if ( pos > 10 ) {
           $('#intro-map').fadeOut('slow', function() {
-            $('#intro-map-window .inner').removeClass('wbg');  
+            $('#intro-map-window .inner').removeClass('wbg');
           });
+          $('#scroll-tip-container').fadeOut();
         } else {
           $('#intro-map').fadeIn('slow');
           $('#intro-map-window .inner').addClass('wbg');
@@ -64,7 +71,7 @@ var torApp = function() {
         var bcoords = 'right '+yPos + 'px';
         
         $bg.css({ backgroundPosition: coords });
-        //$blurb.css({ backgroundPosition: bcoords });
+        $wbg.css({ backgroundPosition: coords });
         
       });
     });
