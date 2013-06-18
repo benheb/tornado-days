@@ -49,12 +49,11 @@ var torApp = function() {
         
         if ( pos > 10 ) {
           $('#intro-map').fadeOut('slow', function() {
-            $('#intro-map-window .inner').css('background', 'none');  
+            $('#intro-map-window .inner').removeClass('wbg');  
           });
         } else {
-          $('#intro-map').fadeIn('slow', function() {
-            $('#intro-map-window .inner').css('background', 'none');  
-          });
+          $('#intro-map').fadeIn('slow');
+          $('#intro-map-window .inner').addClass('wbg');
         }
         
         var active = self.visible || 'map_one';

@@ -182,14 +182,14 @@ torApp.prototype.intro = function() {
         };
         
         var line = svg.append("line")
-          .attr("stroke", 'red')
+          .attr("stroke", '#444')
           .attr('stroke-width', 2)
           .attr("x1", lines[ cnt ][ 0 ].x1)
           .attr("y1", lines[ cnt ][ 0 ].y1)
           .attr("x2", lines[ cnt ][ 0 ].x1)
           .attr("y2", lines[ cnt ][ 0 ].y1)
           .transition()
-          .duration(1000)
+          .duration(500)
             .attr("x2", lines[ cnt ][ 1 ].x2)
             .attr("y2", lines[ cnt ][ 1 ].y2)
             .each('end', function() {

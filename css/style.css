@@ -165,10 +165,13 @@ path {
 /* Introduction */
 
 #intro-map-window .inner {
-  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
   width: 870px;
   margin: auto;
   height: 190px;
+}
+
+#intro-map-window .inner.wbg {
+  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
 }
 
 #intro-map-window article { 
