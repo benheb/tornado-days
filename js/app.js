@@ -9,12 +9,12 @@
 
 
 $(document).ready(function(){
-  var height = $(window).height() + 100;
+  var height = $(window).height() + 20;
   $('.about').css('height', height+'px');
   $('#home').css('height', height+'px');
   
   var w = $(window).width(),
-      h = $(window).height();
+      h = $(window).height() + 100;
   
   $('#intro-map').css( { 'width': w+'px', 'height': h+'px' } );
   
@@ -54,13 +54,15 @@ var torApp = function() {
         var pos = $(window).scrollTop(); //position of the scrollbar
         
         if ( pos > 10 ) {
-          $('#intro-map').fadeOut('slow', function() {
-            $('#intro-map-window .inner').removeClass('wbg');
-          });
-          $('#scroll-tip-container').fadeOut();
+          $('#intro-map').fadeOut();
+          $('#intro-map-window-one').fadeOut();
+          $('#intro-map-window-two').show();
+          $('#scroll-tip-container').hide();
         } else {
-          $('#intro-map').fadeIn('slow');
-          $('#intro-map-window .inner').addClass('wbg');
+          $('#intro-map-window-two').hide();
+          $('#intro-map').fadeIn();
+          $('#intro-map-window-one').show();
+          $('#scroll-tip-container').show();
         }
         
         var active = self.visible || 'map_one';
@@ -71,7 +73,6 @@ var torApp = function() {
         var bcoords = 'right '+yPos + 'px';
         
         $bg.css({ backgroundPosition: coords });
-        $wbg.css({ backgroundPosition: coords });
         
       });
     });

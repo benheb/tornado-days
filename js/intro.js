@@ -6,15 +6,16 @@ torApp.prototype.intro = function() {
   var width = $(window).width(),
       height = $(window).height();
   
+  var scale = width / 4;
   var projection = interpolatedProjection(
       d3.geo.orthographic()
           .rotate([10, -10])
           .center([-10, 10])
-          .scale(300)
+          .scale(scale + 40)
           //.clipAngle(90)
           .translate([width / 2, height / 2]),
       d3.geo.equirectangular()
-          .scale(245)
+          .scale(scale - 30)
           .translate([width / 2, height / 2]));
   
   var path = d3.geo.path()
@@ -48,8 +49,9 @@ torApp.prototype.intro = function() {
   
   function animation() {
     svg.transition()
-        .duration(7500)
-        .tween("projection", function() {
+        .duration(7000)
+        .tween("projection", function( i ) {
+          var itr = 0;
           return function(_) {
             projection.alpha(_);
             svg.selectAll('path').attr('d', path)
@@ -199,7 +201,7 @@ torApp.prototype.intro = function() {
    
    function showWindow() {
      self.can_scroll = true;
-     $('#intro-map-window').fadeIn();
+     $('#intro-map-window-one').fadeIn();
      $('#scroll-tip-container').show();
       setTimeout(function() {
         //$('#intro-map').fadeOut('slow', function() {

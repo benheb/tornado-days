@@ -20,7 +20,7 @@ body{
 
 .states {
   stroke:#222222;
-  fill:#333333;
+  fill: rgb(53, 58, 65);
 }
 
 .world {
@@ -39,7 +39,8 @@ path {
 }
 
 .intro-land {
-  fill: #38424e; 
+  /*fill: #38424e;*/
+ fill: rgb(53, 58, 65); 
 }
 
 .sphere,
@@ -60,19 +61,6 @@ path {
   position: absolute;
   z-index: 100;
   background:#FEFEFE;
-}
-
-#intro-map-window {
-  display:none;
-  height: 191px;
-  z-index: 200;
-  position: absolute;
-  top: 291px;
-  width: 100%;
-  font-size: 166px;
-  font-weight: bold;
-  font-family: fantasy;
-  text-align: center;
 }
 
 @-webkit-keyframes swinging {
@@ -205,21 +193,36 @@ path {
 
 /* Introduction */
 
-#intro-map-window .inner {
+.intro-diddy .inner {
   width: 870px;
   margin: auto;
   height: 190px;
 }
 
-#intro-map-window .inner.wbg {
-  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
+.intro-diddy {
+  display:none;
+  height: 191px;
+  z-index: 200;
+  position: absolute;
+  top: 291px;
+  width: 100%;
+  font-size: 166px;
+  font-weight: bold;
+  font-family: fantasy;
+  text-align: center;
+  color:rgb(49, 49, 49);
 }
 
-#intro-map-window article { 
+#intro-map-window-one .inner.wbg {
+  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
+  box-shadow: inset 0px 0px 18px 4px #666;
+}
+
+.intro-diddy article { 
   height: 152px;
 }
 
-#intro-map-window #intro { 
+.intro-diddy #intro { 
   height: 150px;
   width: 100%;
   font-size: 28px;
