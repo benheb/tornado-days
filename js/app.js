@@ -66,12 +66,13 @@ var torApp = function() {
           $('#scroll-tip-container').show();
         }
         
+        console.log('pos', pos)
         if ( pos < 3 && this.prev_pos > 3 ) {
           self.intro_svg.selectAll(".intro-tors")
             .transition()
             .duration(1000)
             .attr("transform", function(d) {
-              var random = Math.floor((Math.random()*100)+1);
+              var random = Math.floor((Math.random()*20)+1);
               var lat = (parseFloat(d.latitude) + random);
               return "translate(" + self.intro_projection([d.longitude,lat]) + ")";
             })

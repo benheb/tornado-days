@@ -162,6 +162,7 @@ path {
   max-width: 1920px; 
   position: relative; 
   overflow:hidden;
+  z-index:200;
 }
 
 .map-blurb {
@@ -205,7 +206,7 @@ path {
 .intro-diddy {
   display:none;
   height: 191px;
-  z-index: 200;
+  z-index: 115;
   position: absolute;
   top: 291px;
   width: 100%;
@@ -214,6 +215,7 @@ path {
   font-family: fantasy;
   text-align: center;
   color:rgb(49, 49, 49);
+  position:fixed;
 }
 
 #intro-map-window-one .inner.wbg {
