@@ -66,7 +66,6 @@ var torApp = function() {
           $('#scroll-tip-container').show();
         }
         
-        console.log('pos', pos)
         if ( pos < 3 && this.prev_pos > 3 ) {
           self.intro_svg.selectAll(".intro-tors")
             .transition()
@@ -83,6 +82,9 @@ var torApp = function() {
             .attr("transform", function(d) {
               return "translate(" + self.intro_projection([d.longitude,d.latitude]) + ")";
             });
+            
+            $('.about').removeClass('viewed')
+            self.updateLegend();
         }
         
         this.prev_pos = pos;
@@ -147,6 +149,12 @@ var torApp = function() {
   this.map_eight = d3.select("#map_eight").append("svg");
   this.legend_map_one = d3.select('.legend-container.map_one').append("svg");
   this.legend_map_two = d3.select('.legend-container.map_two').append("svg");
+  this.legend_map_three = d3.select('.legend-container.map_three').append("svg");
+  this.legend_map_four = d3.select('.legend-container.map_four').append("svg");
+  this.legend_map_five = d3.select('.legend-container.map_five').append("svg");
+  this.legend_map_six = d3.select('.legend-container.map_six').append("svg");
+  this.legend_map_seven = d3.select('.legend-container.map_seven').append("svg");
+  this.legend_map_eight = d3.select('.legend-container.map_eight').append("svg");
  
   this.scales = {
      0: 3,
@@ -219,7 +227,9 @@ torApp.prototype.createMap = function () {
 torApp.prototype.updateLegend = function() {
   var self = this;
   
-  var legends = [ "map_one", "map_two" ]
+  d3.selectAll('.legend-dots').remove();
+  
+  var legends = ["map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight"];
   $.each( legends, function(i, leg) {
     var dots = self["legend_"+leg].append('g');
     var legend = [ 
