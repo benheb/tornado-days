@@ -23,23 +23,22 @@ torApp.prototype.intro = function() {
   
   var graticule = d3.geo.graticule();
   
-  var svg = d3.select("#intro-map").append("svg")
+  this.intro_svg = d3.select("#intro-map").append("svg")
       .attr("width", width)
       .attr("height", height);
   
-  svg.append("path")
+  this.intro_svg.append("path")
       .datum({type: "Sphere"})
       .attr("class", "sphere")
       .attr("d", path);
   
-  svg.append("path")
+  this.intro_svg.append("path")
       .datum(graticule)
       .attr("class", "graticule")
       .attr("d", path);
   
   d3.json("data/world.json", function(error, world) {
-    console.log('ob', world)
-    svg.insert("path", ".graticule")
+    self.intro_svg.insert("path", ".graticule")
         .datum(topojson.feature(world, world.objects.world))
         .attr("class", "intro-land")
         .attr("d", path);
@@ -48,13 +47,13 @@ torApp.prototype.intro = function() {
   animation();
   
   function animation() {
-    svg.transition()
+    self.intro_svg.transition()
         .duration(7000)
         .tween("projection", function( i ) {
           var itr = 0;
           return function(_) {
             projection.alpha(_);
-            svg.selectAll('path').attr('d', path)
+            self.intro_svg.selectAll('path').attr('d', path)
           };
         })
         .each("end", addPoints);
@@ -91,6 +90,8 @@ torApp.prototype.intro = function() {
   
   function addPoints() {
     self.createMap();
+    self.updateLegend();
+    
     var scales = {
        0: 1,
        1: 1,
@@ -108,8 +109,9 @@ torApp.prototype.intro = function() {
       var cost = 0;
       var count = 0;
       
-      var introTors = svg.append('g');
-
+      var introTors = self.intro_svg.append('g');
+      self.intro_projection = projection;
+      
       var dur;
       introTors.selectAll("circle")
         .data(rows)
@@ -125,13 +127,13 @@ torApp.prototype.intro = function() {
         .attr('stroke', "#122133")
         .attr('stroke-width', 0.5)
         .attr('opacity', 0)
+        .attr('class', 'intro-tors')
         .attr('r', function(d) { 
           var size = ( d.scale == undefined ) ? 1 : scales[d.scale] + 2;
           return size; 
         })
         .transition()
-          //.delay(function( d, i ) { return dur })
-          //.duration( dur )
+          .delay(function( d, i ) { return Math.floor((Math.random()*5000)+300); })
           .duration(3000)
           .attr("transform", function(d) {
             return "translate(" + projection([d.longitude,d.latitude]) + ")";
@@ -182,7 +184,7 @@ torApp.prototype.intro = function() {
           return;
         };
         
-        var line = svg.append("line")
+        var line = self.intro_svg.append("line")
           .attr("stroke", '#CCC')
           .attr('stroke-width', 2)
           .attr("x1", lines[ cnt ][ 0 ].x1)
@@ -203,11 +205,5 @@ torApp.prototype.intro = function() {
      self.can_scroll = true;
      $('#intro-map-window-one').fadeIn();
      $('#scroll-tip-container').show();
-      setTimeout(function() {
-        //$('#intro-map').fadeOut('slow', function() {
-        //  $('#intro-map-window .inner').css('background', 'none');  
-        //});
-          
-      }, 2000);
    }
 }

@@ -20,7 +20,7 @@ body{
 
 .states {
   stroke:#222222;
-  fill: rgb(53, 58, 65);
+  fill: #444;
 }
 
 .world {
@@ -40,12 +40,12 @@ path {
 
 .intro-land {
   /*fill: #38424e;*/
- fill: rgb(53, 58, 65); 
+ fill: #444; 
 }
 
 .sphere,
 .graticule {
-  stroke: #aaa;
+  stroke: #999;
   stroke-width:0.3;
 }
 
@@ -54,6 +54,9 @@ path {
   stroke-width: 2px;
 }
 
+.legend-container {
+  height:525px;
+}
 
 #intro-map {
   height: 800px;

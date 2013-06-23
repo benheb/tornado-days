@@ -52,6 +52,7 @@ var torApp = function() {
         }
         
         var pos = $(window).scrollTop(); //position of the scrollbar
+        if ( !this.prev_pos ) this.prev_pos = pos;
         
         if ( pos > 10 ) {
           $('#intro-map').fadeOut();
@@ -64,6 +65,26 @@ var torApp = function() {
           $('#intro-map-window-one').show();
           $('#scroll-tip-container').show();
         }
+        
+        if ( pos < 3 && this.prev_pos > 3 ) {
+          self.intro_svg.selectAll(".intro-tors")
+            .transition()
+            .duration(1000)
+            .attr("transform", function(d) {
+              var random = Math.floor((Math.random()*100)+1);
+              var lat = (parseFloat(d.latitude) + random);
+              return "translate(" + self.intro_projection([d.longitude,lat]) + ")";
+            })
+            .transition()
+            .duration(1000)
+            .ease('cubic-in-out') //elastic // bounce
+            .delay(function( d, i ) { return Math.floor((Math.random()*1000)+300); })
+            .attr("transform", function(d) {
+              return "translate(" + self.intro_projection([d.longitude,d.latitude]) + ")";
+            });
+        }
+        
+        this.prev_pos = pos;
         
         var active = self.visible || 'map_one';
         var $blurb = $('.map-blurb.'+active);
@@ -78,21 +99,32 @@ var torApp = function() {
     });
     
     
-    
     $('.about').appear();
     $('.about').on('appear', function() {
       var id = $(this).children('.maps').attr('id');
       
-      //TODO add back in
-      //$('#'+id+'_counties').show();
       self.visible = id;
+      
+      if ( !($(this).hasClass('viewed')) ) {
+        self["legend_"+id].selectAll(".legend-dots")
+          .transition()
+          .delay(function( d, i ) { return Math.floor((Math.random()*3000)+300); })
+          .duration( 4000 )
+          .ease("bounce")
+            .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( 480 - d.radius )) + ")";})
+            .attr('r', function(d) { return d.radius });
+      }
+      
       app.LoadPoints( id );
+      $(this).addClass('viewed');
     });
     
-    $('.maps').on('disappear', function() {
+    $('.about').on('disappear', function() {
+      
       var id = $(this).attr('id');
       $('#'+id+'_counties').hide();
       app.RemovePoints( id );
+      
     }); 
   
   this.projection = d3.geo.albers()
@@ -112,6 +144,8 @@ var torApp = function() {
   this.map_six = d3.select("#map_six").append("svg");
   this.map_seven = d3.select("#map_seven").append("svg");
   this.map_eight = d3.select("#map_eight").append("svg");
+  this.legend_map_one = d3.select('.legend-container.map_one').append("svg");
+  this.legend_map_two = d3.select('.legend-container.map_two').append("svg");
  
   this.scales = {
      0: 3,
@@ -123,6 +157,7 @@ var torApp = function() {
   }
   
   //this.createMap();
+  //this.updateLegend();
 }
 
 torApp.prototype.animate = function( m ) {
@@ -180,6 +215,34 @@ torApp.prototype.createMap = function () {
   });
 }
 
+torApp.prototype.updateLegend = function() {
+  var self = this;
+  
+  var legends = [ "map_one", "map_two" ]
+  $.each( legends, function(i, leg) {
+    var dots = self["legend_"+leg].append('g');
+    var legend = [ 
+      { radius: 3, x: 5, y: 4 }, 
+      { radius: 5, x: 50, y: 6 }, 
+      { radius: 7, x: 100, y: 8 }, 
+      { radius: 10, x: 160, y: 11 }, 
+      { radius: 14, x: 230, y: 15 },
+      { radius: 19, x: 300, y: 20 } 
+    ];
+    
+    dots.selectAll("circle")
+      .data( legend )
+    .enter().insert("circle")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";})
+      .attr("fill", "#FEFEFE")
+      .attr('stroke', "rgb(255, 20, 0)")
+      .attr('stroke-width', 0.6)
+      .attr('opacity', 0.8)
+      .attr('class', 'legend-dots')
+      .attr('r', function(d) { return d.radius });
+  });
+}
+
 torApp.prototype.LoadPoints = function( map ) {
   var self = this;
   
@@ -214,7 +277,7 @@ torApp.prototype.LoadPoints = function( map ) {
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + self.projection([d.longitude,d.latitude]) + ")";})
         .attr("fill", "#FFFFFF")
-        .attr('stroke', "#ff3322")
+        .attr('stroke', "rgb(255, 20, 0)")
         .attr('stroke-width', 0.6)
         .attr('class', 'storm-reports-large')
         .attr('opacity', 0.5)
