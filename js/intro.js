@@ -188,6 +188,7 @@ torApp.prototype.intro = function() {
         var line = self.intro_svg.append("line")
           .attr("stroke", '#CCC')
           .attr('stroke-width', 2)
+          .attr('class', 'intro-lines')
           .attr("x1", lines[ cnt ][ 0 ].x1)
           .attr("y1", lines[ cnt ][ 0 ].y1)
           .attr("x2", lines[ cnt ][ 0 ].x1)
@@ -204,7 +205,9 @@ torApp.prototype.intro = function() {
    
    function showWindow() {
      $('body').removeClass('no-scroll');
-     $('#intro-map-window-one').fadeIn();
+     $('#intro-map-window-one').fadeIn(function() {
+       $('.intro-lines').fadeOut('slow');
+     });
      $('#scroll-tip-container').show();
    }
 }
