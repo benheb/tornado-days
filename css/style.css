@@ -101,7 +101,7 @@ path {
 
 .pendulum {
   position: relative;
-  background: #ddd;
+  background: #FFF;
   color: #333;
   width: 60px;
   height: 60px;
@@ -110,6 +110,7 @@ path {
   margin: 0 0 0 -28px;
   font-weight: bold;
   font-size: 10pt;
+  border: 1px solid red;
 }
 
 
@@ -226,7 +227,8 @@ path {
 
 #intro-map-window-one .inner.wbg {
   background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
-  box-shadow: inset 0px 0px 18px 4px #666;
+  box-shadow: inset 0px 0px 19px 3px #777;
+  overflow: hidden;
 }
 
 .intro-diddy article { 

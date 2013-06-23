@@ -124,7 +124,8 @@ torApp.prototype.intro = function() {
           return "translate(" + projection([d.longitude,lat]) + ")";
         })
         .attr("fill", "#FFFFFF")
-        .attr('stroke', "#122133")
+        //.attr('stroke', "#122133")
+        .attr('stroke', "rgb(255, 20, 0)")
         .attr('stroke-width', 0.5)
         .attr('opacity', 0)
         .attr('class', 'intro-tors')
@@ -133,7 +134,7 @@ torApp.prototype.intro = function() {
           return size; 
         })
         .transition()
-          .delay(function( d, i ) { return Math.floor((Math.random()*5000)+300); })
+          .delay(function( d, i ) { return Math.floor((Math.random()*4000)+300); })
           .duration(3000)
           .attr("transform", function(d) {
             return "translate(" + projection([d.longitude,d.latitude]) + ")";
