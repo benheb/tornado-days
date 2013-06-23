@@ -202,7 +202,7 @@ torApp.prototype.intro = function() {
    }
    
    function showWindow() {
-     self.can_scroll = true;
+     $('body').removeClass('no-scroll');
      $('#intro-map-window-one').fadeIn();
      $('#scroll-tip-container').show();
    }

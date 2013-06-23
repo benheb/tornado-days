@@ -35,7 +35,6 @@ var torApp = function() {
     posWas,
     direction = "down";
   
-  this.can_scroll = false;
   this.intro();
   
   $window = $(window);
@@ -46,10 +45,7 @@ var torApp = function() {
       
       $(window).scroll(function(e) {
         
-        if ( !self.can_scroll ) {
-          $('body').css('overflow', 'hidden');
-          return;
-        }
+        if ( $('body').hasClass('no-scroll') ) return;
         
         var pos = $(window).scrollTop(); //position of the scrollbar
         if ( !this.prev_pos ) this.prev_pos = pos;

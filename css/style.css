@@ -13,6 +13,12 @@ body{
   padding:0;
 }
 
+.no-scroll {
+  position: fixed; 
+  overflow-y: scroll;
+  width: 100%;
+}
+
 .counties {
   stroke:#222222;
   fill:#333333;
