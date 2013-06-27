@@ -61,7 +61,7 @@ path {
 }
 
 .legend-container {
-  height:525px;
+  height:545px;
 }
 
 #intro-map {
@@ -278,4 +278,25 @@ path {
 
 #blurb-eight {
   background: url(../images/supercell05.png) right fixed; 
+}
+
+.content-container {
+  position: absolute;
+  background: transparent;
+  top: 195px;
+  height: 481px;
+  width:320px;
+  display:none;
+}
+
+.video-canvas {
+  width:320px;
+}
+
+.video {
+  display:none;
+}
+
+.content-container video {
+  width:320px;
 }

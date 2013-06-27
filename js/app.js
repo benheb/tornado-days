@@ -73,8 +73,8 @@ var torApp = function() {
             })
             .transition()
             .duration(1000)
-            .ease('cubic-in-out') //elastic // bounce
-            .delay(function( d, i ) { return Math.floor((Math.random()*1000)+300); })
+            .delay(function( d, i ) { return Math.floor((Math.random()*700)+50); })
+            .ease('bounce') //elastic // bounce
             .attr("transform", function(d) {
               return "translate(" + self.intro_projection([d.longitude,d.latitude]) + ")";
             });
@@ -110,9 +110,16 @@ var torApp = function() {
           .delay(function( d, i ) { return Math.floor((Math.random()*3000)+300); })
           .duration( 4000 )
           .ease("bounce")
-            .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( 480 - d.radius )) + ")";})
-            .attr('r', function(d) { return d.radius });
+            .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( 520 - d.radius )) + ")";})
+            .attr('r', function(d) { return d.radius })
+            
+        //TODO HACK! "end" not working...? 
+        setTimeout(function() {
+          self.playVideoOne( id )  
+        },3500)
+
       }
+      
       
       app.LoadPoints( id );
       $(this).addClass('viewed');
@@ -456,3 +463,38 @@ torApp.prototype.projectionTween = function(projection0, projection1) {
   };
 }
 
+torApp.prototype.playVideoOne = function( id ) {
+  var self = this;
+  var val = id.replace(/map_/g, '');
+  
+  //TODO remove 
+  if (val != 'one') return;
+  
+  var canvas = document.getElementById('video-'+val+'-canvas');
+  var ctx    = canvas.getContext('2d');
+  var video  = document.getElementById('video-'+val);
+  
+  video.addEventListener('play', function () {
+      var $this = this; //cache
+      (function loop() {
+          if (!$this.paused && !$this.ended) {
+              ctx.drawImage($this, 0, 0);
+              setTimeout(loop, 1000 / 60); // drawing at 30fps
+          }
+      })();
+  }, 0);
+  
+  $('.content-container').fadeIn('slow');
+  video.play();
+  
+  var rotation = 0;
+  this.rotateVideo = setInterval( function() {
+    rotation++;
+    $('#video-one-canvas').css({'width': rotation-35+'px', '-webkit-transform' : 'rotate('+ rotation +'deg)',
+                 '-moz-transform' : 'rotate('+ rotation +'deg)',
+                 '-ms-transform' : 'rotate('+ rotation +'deg)',
+                 'transform' : 'rotate('+ rotation +'deg)'});
+    if ( rotation >= 360 ) clearInterval( self.rotateVideo );  
+  },0.1);
+  
+}
