@@ -12,6 +12,7 @@ $(document).ready(function(){
   var height = $(window).height() + 20;
   
   //setup UI
+  $('.maps').css( { 'width': $(window).width()+'px', 'height': height+'px'});
   $('.about').css('height', height+'px');
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
@@ -52,6 +53,8 @@ torApp.prototype.scrollControls = function() {
       var $wbg = $('#intro-map-window .inner.wbg');
       
       $(window).scroll(function(e) {
+        
+        //self.update();
         
         if ( $('body').hasClass('no-scroll') ) return;
         
@@ -95,7 +98,12 @@ torApp.prototype.scrollControls = function() {
         
         this.prev_pos = pos;
         
-        var active = self.visible || 'map_one';
+        clearTimeout($.data(this, "scrollTimer"));
+        $.data(this, "scrollTimer", setTimeout(function() {
+            // do something
+           $('.maps').css( {'pointer-events': 'auto' });
+        }, 1200));
+        
         var yPos = -($window.scrollTop() / $bg.data('speed'));
         var coords = '50% '+ yPos + 'px';
         
@@ -111,7 +119,7 @@ torApp.prototype.scrollControls = function() {
       var id = $(this).children('.maps').attr('id');
       
       //set current visible section
-      self.visible = id;
+      self.active = id;
       
       //Add "viewed" class to know it has been initiated ONCE
       if ( !($(this).hasClass('viewed')) ) {
@@ -125,7 +133,7 @@ torApp.prototype.scrollControls = function() {
             .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( 520 - d.radius )) + ")";})
             .attr('r', function(d) { return d.radius })
             
-        //TODO HACK! "end" not working...? 
+        //TODO HACK! "end" not working...?
         setTimeout(function() {
           self.playVideo( id )  
         },3500);
@@ -143,6 +151,62 @@ torApp.prototype.scrollControls = function() {
       self.RemovePoints( id );
       
     }); 
+}
+
+torApp.prototype.update = function() {
+  var height = window.innerHeight || $(window).height();
+  
+  this.active = this.active || "map_one";
+  $('.maps').css( {'pointer-events': 'none' });
+  
+  var rect = $('#'+this.active).parent()[ 0 ].getBoundingClientRect();
+  var position = $('#'+this.active).css("position");
+  
+  if ( rect.top > 0 && rect.bottom > height ) {
+    $('#'+this.active).parent().css( "overflow-y", 'hidden' );
+    $('#'+this.active).css( {'position': 'relative' });
+  } else if ( rect.top < 0 && rect.bottom > height ) {
+    $('#'+this.active).parent().css( "overflow-y", 'auto' );
+    $('#'+this.active).css( {'position': 'fixed', 'left': '0px', 'top' : '0px'});
+  } else if ( rect.top < 0 && rect.bottom < height ) {
+    //$('#'+this.active).parent().css( "overflow-y", 'hidden' );
+    //$('#'+this.active).css( {'position': 'relative' });
+  }
+  
+  //else
+  //    $('#'+this.active).parent().css('visibility', 'visible');
+
+  //} else {
+  //    if (position != 'absolute')
+         // $('#'+this.active).parent().css('position', 'absolute');
+  //}
+/*
+  if ((rect.top > height) || (rect.bottom < 0))
+      this.el.style.visibility = 'hidden';
+  else
+      this.el.style.visibility = 'visible';
+
+  if (rect.top < 0 && rect.bottom > height) {
+      if (position != 'fixed')
+          this.$el.css('position', 'fixed');
+  } else {
+      if (position != 'absolute')
+          this.$el.css('position', 'absolute');
+  }
+  if (rect.bottom <= height) {
+      if (this.attachment != 'bottom') {
+          this.$el.css('top', 'auto');
+          this.$el.css('bottom', '0');
+      }
+      this.attachment = 'bottom';
+  } else {
+      if (this.attachment != 'top') {
+          this.$el.css('top', '0');
+          this.$el.css('bottom', 'auto');
+      }
+      this.attachment = 'top';
+    }
+    */
 }
 
 torApp.prototype.createMap = function() {
@@ -237,12 +301,25 @@ torApp.prototype.addLand = function () {
         .attr('class', 'world')
         .attr("d", self.path);
       */
-      self[ id ].insert("path")
-        .datum(topojson.feature(world, world.objects.states))
-        .attr('class', 'states')
-        .attr('id', map+'_states')
-        .attr("d", path);
-        
+      if ( id !== 'map_two' ) {
+        self[ id ].insert("path")
+          .datum(topojson.feature(world, world.objects.states))
+          .attr('class', 'states')
+          .attr('id', map+'_states')
+          .attr("d", path);
+      } else {
+        self[ id ].append("g")
+          .attr("class", "states")
+        .selectAll("path")
+          .data(topojson.feature(world, world.objects.states).features)
+        .enter().append("path")
+          .attr('id', function(d) { return d.id })
+          .attr("class", function(d) {
+            if ( d.id === 5 || d.id === 1 || d.id === 17 || d.id === 18 || d.id === 21 || d.id === 22 || d.id === 29 || d.id === 28 || d.id === 47 || d.id === 48 ) return "states";
+          })
+          .attr("d", path);  
+      }
+      
       self[ id ].insert("path")
         .datum(topojson.feature(world, world.objects.water))
         .attr('class', 'lakes')
@@ -403,7 +480,10 @@ torApp.prototype.hover = function( d, map ) {
      
   $('#info-window').html( content ).css({'left' : (x2) + 'px', 'top' : (y2) + 'px'}).delay(500).fadeIn(1000);
   
-  app[ map ].selectAll("path").attr("d", app.path);
+  
+  var m = this.maps[ map ];
+  var path = d3.geo.path().projection( m[ "projection"] );
+  app[ m.id ].selectAll("path").attr("d", path);
   
 }
 
@@ -428,8 +508,8 @@ torApp.prototype.playVideo = function( id ) {
   var val = id.replace(/map_/g, '');
   
   //TODO remove 
-  if (val != 'one') return;
-  
+  //if (val != 'one') return;
+  console.log('val', val)
   var canvas = document.getElementById('video-'+val+'-canvas');
   var ctx    = canvas.getContext('2d');
   var video  = document.getElementById('video-'+val);

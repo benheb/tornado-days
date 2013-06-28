@@ -172,6 +172,13 @@ path {
   z-index:200;
 }
 
+.maps {
+  position:absolute;
+  z-index:50;
+  width:800px;
+  height:800px;
+}
+
 .map-blurb {
   color: rgb(79, 96, 114);
   z-index: 100;
@@ -183,10 +190,10 @@ path {
   line-height: 43px;
   font-size: 22pt;
   opacity: 0.8;
-  height: 745px;
+  height: 1200px;
   font-weight: bold;
   overflow: hidden;
-  z-index: 1;
+  z-index: 60;
 }
 
 .storm-reports {
@@ -254,31 +261,31 @@ path {
 }
 
 #blurb-two {
-  background: url(../images/supercell05.png) right fixed; 
+  background: url(../images/supercell05.png) right fixed !important; 
 }
 
 #blurb-three {
-  background: url(../images/may-22-2011-1.png) right fixed;
+  background: url(../images/may-22-2011-1.png) right fixed !important;
 }
 
 #blurb-four {
-  background: url(../images/may-3-1999-1.png) right fixed; 
+  background: url(../images/may-3-1999-1.png) right fixed !important; 
 }
 
 #blurb-five {
-  background: url(../images/nov-22-1992.png) right fixed;
+  background: url(../images/nov-22-1992.png) right fixed !important;
 }
 
 #blurb-six {
-  background: url(../images/1965-2.png) right fixed; 
+  background: url(../images/1965-2.png) right fixed !important; 
 }
 
 #blurb-seven {
-  background: url(../images/blurb-tor.png) right fixed;
+  background: url(../images/blurb-tor.png) right fixed !important;
 }
 
 #blurb-eight {
-  background: url(../images/supercell05.png) right fixed; 
+  background: url(../images/supercell05.png) right fixed !important; 
 }
 
 .content-container {
@@ -296,10 +303,25 @@ path {
   width:320px;
 }
 
+#video-two-canvas {
+  width:100%;
+  height:100%;
+  margin:0px;
+}
+
 .video {
  display:none;
 }
 
 .content-container video {
   width:320px;
+}
+
+#video-two-container {
+  width: 110%;
+  height: 110%;
+  z-index: 0;
+  top: -60px;
+  right:0px;
+  left:-20px;
 }
