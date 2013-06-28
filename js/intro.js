@@ -1,8 +1,6 @@
 torApp.prototype.intro = function() {
   var self = this;
   
-  this.can_scroll = false;
-  
   var width = $(window).width(),
       height = $(window).height();
   
@@ -48,7 +46,7 @@ torApp.prototype.intro = function() {
   
   function animation() {
     self.intro_svg.transition()
-        .duration(7000)
+        .duration(70)
         .tween("projection", function( i ) {
           var itr = 0;
           return function(_) {
@@ -89,8 +87,6 @@ torApp.prototype.intro = function() {
   }
   
   function addPoints() {
-    self.createMap();
-    self.updateLegend();
     
     var scales = {
        0: 1,

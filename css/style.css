@@ -185,7 +185,8 @@ path {
   opacity: 0.8;
   height: 745px;
   font-weight: bold;
-  overflow:hidden;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .storm-reports {
@@ -249,7 +250,7 @@ path {
 }
 
 #blurb-one {
-  background: url(../images/blurb-tor.png) right fixed;
+  background: url(../images/blurb-tor.png) right fixed !important;
 }
 
 #blurb-two {
@@ -283,10 +284,12 @@ path {
 .content-container {
   position: absolute;
   background: transparent;
-  top: 195px;
+  top: 205px;
   height: 481px;
-  width:320px;
-  display:none;
+  width: 320px;
+  display: none;
+  right: 71px;
+  z-index: 1000;
 }
 
 .video-canvas {
@@ -294,7 +297,7 @@ path {
 }
 
 .video {
-  display:none;
+ display:none;
 }
 
 .content-container video {
