@@ -16,8 +16,6 @@ $(document).ready(function(){
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
-  //TODO setup window resize events
-  
   app = new torApp();
 }); 
 
@@ -36,7 +34,18 @@ torApp.prototype.scrollControls = function() {
     min = 40,
     max = 95,
     m = 0;
-     
+  
+  //window resize 
+  $(window).on('resize', function() {
+    var h = $(window).height();
+    var w = $(window).width();
+    
+    $('.about').css('height', h + 50 +'px');
+    $('#home').css('height', h+'px');
+    $('#intro-map').css( { 'width': w+'px', 'height': h + 100+'px' } );
+    self.intro_svg.attr('width', w ).attr('height', h + 100);
+  });
+  
   $window = $(window);
     $('section[data-type="background"]').each(function(){
       var $bg = $(this);
