@@ -29,6 +29,11 @@ body{
   fill: #444;
 }
 
+.states-hidden {
+  stroke:none;
+  fill:none;
+}
+
 .world {
   stroke:none;
   stroke-width:0.3;
@@ -111,6 +116,7 @@ path {
   font-weight: bold;
   font-size: 10pt;
   border: 1px solid red;
+  background: #e7ece6 url( ../images/down-arrow.png ) no-repeat bottom;
 }
 
 
@@ -223,7 +229,7 @@ path {
   height: 191px;
   z-index: 115;
   position: absolute;
-  top: 291px;
+  top: 35%;
   width: 100%;
   font-size: 166px;
   font-weight: bold;

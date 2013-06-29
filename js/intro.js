@@ -22,6 +22,7 @@ torApp.prototype.intro = function() {
   var graticule = d3.geo.graticule();
   
   this.intro_svg = d3.select("#intro-map").append("svg")
+      .style('opacity', 0)
       .attr("width", width)
       .attr("height", height);
   
@@ -40,13 +41,14 @@ torApp.prototype.intro = function() {
         .datum(topojson.feature(world, world.objects.world))
         .attr("class", "intro-land")
         .attr("d", path);
+    
+    animation();
   });
-  
-  animation();
   
   function animation() {
     self.intro_svg.transition()
         .duration(7000)
+        .style('opacity', 1)
         .tween("projection", function( i ) {
           var itr = 0;
           return function(_) {
@@ -55,6 +57,7 @@ torApp.prototype.intro = function() {
           };
         })
         .each("end", addPoints);
+    
   }
   
   function interpolatedProjection(a, b) {
@@ -147,30 +150,33 @@ torApp.prototype.intro = function() {
    function drawLines( cnt ) {
      if (!cnt) var cnt = 0;
      
+     var top = $(window).height() * 0.35;
+     var down = top + 191;
+     
      var lines = [
           [
             { x1: document.width / 2, y1: 0},
-            { x2: document.width / 2, y2: 291}
+            { x2: document.width / 2, y2: top}
           ],
           [
-            { x1: document.width / 2, y1: 291},
-            { x2: (document.width / 2) + 436, y2: 291}
+            { x1: document.width / 2, y1: top},
+            { x2: (document.width / 2) + 436, y2: top}
           ],
           [
-            { x1: (document.width / 2) + 436, y1: 291},
-            { x2: (document.width / 2) + 436, y2: 481}
+            { x1: (document.width / 2) + 436, y1: top},
+            { x2: (document.width / 2) + 436, y2: down}
           ],
           [
-            { x1: (document.width / 2) + 436, y1: 481},
-            { x2: (document.width / 2) - 435, y2: 481}
+            { x1: (document.width / 2) + 436, y1: down},
+            { x2: (document.width / 2) - 435, y2: down}
           ],
           [
-            { x1: (document.width / 2) - 435, y1: 481},
-            { x2: (document.width / 2) - 435, y2: 291}
+            { x1: (document.width / 2) - 435, y1: down},
+            { x2: (document.width / 2) - 435, y2: top}
           ],
           [
-            { x1: (document.width / 2) - 435, y1: 291},
-            { x2: (document.width / 2), y2: 291}
+            { x1: (document.width / 2) - 435, y1: top},
+            { x2: (document.width / 2), y2: top}
           ]
           
            

@@ -315,7 +315,11 @@ torApp.prototype.addLand = function () {
         .enter().append("path")
           .attr('id', function(d) { return d.id })
           .attr("class", function(d) {
-            if ( d.id === 5 || d.id === 1 || d.id === 17 || d.id === 18 || d.id === 21 || d.id === 22 || d.id === 29 || d.id === 28 || d.id === 47 || d.id === 48 ) return "states";
+            if ( d.id === 5 || d.id === 1 || d.id === 17 || d.id === 18 || d.id === 21 || d.id === 22 || d.id === 29 || d.id === 28 || d.id === 47 || d.id === 48 ) {
+              return "states";
+            } else {
+              return "states-hidden";
+            }
           })
           .attr("d", path);  
       }
