@@ -14,7 +14,7 @@ body{
 }
 
 .no-scroll {
-  position: fixed; 
+  position: fixed !important; 
   overflow-y: scroll;
   width: 100%;
 }
@@ -29,7 +29,22 @@ body{
   fill: #444;
 }
 
+.states-partial {
+  stroke:#666;
+  fill: #444;
+}
+
+.counties-partial {
+  stroke:#666;
+  fill:none;
+}
+
 .states-hidden {
+  stroke:none;
+  fill:none;
+}
+
+.counties-hidden {
   stroke:none;
   fill:none;
 }
@@ -178,6 +193,15 @@ path {
   z-index:200;
 }
 
+.scrollblock {
+  margin: 0 auto; 
+  width: 100%; 
+  max-width: 1920px; 
+  position: relative; 
+  overflow:hidden;
+  z-index:200;
+}
+
 .about.map_two {
   background: url(../images/supercell-co-bw.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -197,7 +221,7 @@ path {
   color: rgb(79, 96, 114);
   z-index: 100;
   position: absolute;
-  top: 20px;
+  top: 0px;
   right: 50px;
   width: 320px;
   padding: 20px;
@@ -286,6 +310,7 @@ path {
   -o-background-size: cover;
   background-size: cover;
   left: 50px;
+  opacity:0.9
 }
 
 #blurb-three {
@@ -315,7 +340,7 @@ path {
 .content-container {
   position: absolute;
   background: transparent;
-  top: 205px;
+  top: 190px;
   height: 481px;
   width: 320px;
   display: none;

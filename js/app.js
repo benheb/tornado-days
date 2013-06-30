@@ -9,6 +9,7 @@
 
 
 $(document).ready(function(){
+
   var height = $(window).height() + 20;
   
   //setup UI
@@ -28,6 +29,13 @@ var torApp = function() {
   this.addLand();
   this.scrollControls();
   this.updateLegend();
+  
+  var scrollorama = $.scrollorama({
+    blocks:'.scrollblock',
+    enablePin:false
+  });
+  
+  scrollorama.animate('#section-two',{ duration: 300, property:'opacity', start:0.1,end:1 });
 }
  
 torApp.prototype.scrollControls = function() {
@@ -111,7 +119,6 @@ torApp.prototype.scrollControls = function() {
         
         
         if ( $($bg).hasClass('map_two') ) {
-          console.log( 'yes ')
         } else {
           $bg.css({ backgroundPosition: coords });
         }
@@ -235,7 +242,7 @@ torApp.prototype.createMap = function() {
     },
     "map_two" : {
       "id": "map_two", 
-      "projection" : d3.geo.mercator().scale(2500).center([-95, 35]).translate([w / 2, h / 2]).precision(.1),
+      "projection" : d3.geo.mercator().scale(2500).center([-95, 33]).translate([w / 2, h / 2]).precision(.1),
       "dataset" : 'data/feb-5-6-2008.csv'
     },
     "map_three" : {
@@ -317,6 +324,12 @@ torApp.prototype.addLand = function () {
           .attr('class', 'states')
           .attr('id', map+'_states')
           .attr("d", path);
+        
+        self[ id ].insert("path")
+          .datum(topojson.feature(world, world.objects.water))
+          .attr('class', 'lakes')
+          .attr("d", path);
+          
       } else {
         self[ id ].append("g")
           .attr("class", "states")
@@ -326,18 +339,15 @@ torApp.prototype.addLand = function () {
           .attr('id', function(d) { return d.id })
           .attr("class", function(d) {
             if ( d.id === 5 || d.id === 1 || d.id === 17 || d.id === 18 || d.id === 21 || d.id === 22 || d.id === 29 || d.id === 28 || d.id === 47 || d.id === 48 ) {
-              return "states";
+              return "states-partial";
             } else {
               return "states-hidden";
             }
           })
-          .attr("d", path);  
+          .attr("d", path);
+        
+           
       }
-      
-      self[ id ].insert("path")
-        .datum(topojson.feature(world, world.objects.water))
-        .attr('class', 'lakes')
-        .attr("d", path);
     });
     
   });
