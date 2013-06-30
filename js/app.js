@@ -14,6 +14,8 @@ $(document).ready(function(){
   //setup UI
   $('.maps').css( { 'width': $(window).width()+'px', 'height': height+'px'});
   $('.about').css('height', height+'px');
+  $('.map-blurb').css('height', height+'px');
+  $('.legend-container').css('height', height - 220 + 'px');
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
@@ -30,7 +32,7 @@ var torApp = function() {
  
 torApp.prototype.scrollControls = function() {
   var self = this,
-    h = 1000,
+    h = $(window).height() + 20, //1000
     w = document.width,
     min = 40,
     max = 95,
@@ -107,7 +109,12 @@ torApp.prototype.scrollControls = function() {
         var yPos = -($window.scrollTop() / $bg.data('speed'));
         var coords = '50% '+ yPos + 'px';
         
-        $bg.css({ backgroundPosition: coords });
+        
+        if ( $($bg).hasClass('map_two') ) {
+          console.log( 'yes ')
+        } else {
+          $bg.css({ backgroundPosition: coords });
+        }
         
       });
     });
@@ -123,21 +130,24 @@ torApp.prototype.scrollControls = function() {
       
       //Add "viewed" class to know it has been initiated ONCE
       if ( !($(this).hasClass('viewed')) ) {
-        
+        var h = $(window).height() - 220;
         //Legend animation
         self["legend_"+id].selectAll(".legend-dots")
           .transition()
           .delay(function( d, i ) { return Math.floor((Math.random()*3000)+300); })
           .duration( 4000 )
           .ease("bounce")
-            .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( 520 - d.radius )) + ")";})
+            .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( h - d.radius )) + ")";})
             .attr('r', function(d) { return d.radius })
-            
-        //TODO HACK! "end" not working...?
+      }
+      
+      //TODO HACK! "end" not working...?
+      if ( id === "map_one") {
         setTimeout(function() {
           self.playVideo( id )  
         },3500);
-
+      } else {
+        self.playVideo( id );
       }
       
       self.LoadPoints( id );
@@ -149,7 +159,7 @@ torApp.prototype.scrollControls = function() {
       var id = $(this).attr('id');
       $('#'+id+'_counties').hide();
       self.RemovePoints( id );
-      
+      self.stopVideo( id );
     }); 
 }
 
@@ -220,12 +230,12 @@ torApp.prototype.createMap = function() {
   this.maps = {
     "map_one" : { 
       "id": "map_one", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale(1700).center([17, 33]).clipAngle(90).translate([w / 2, h / 2]), 
       "dataset" : 'data/may-24-26-2011.csv' 
     },
     "map_two" : {
       "id": "map_two", 
-      "projection" : d3.geo.mercator().scale(2500).center([-83, 33]).translate([w / 2, h / 2]).precision(.1),
+      "projection" : d3.geo.mercator().scale(2500).center([-95, 35]).translate([w / 2, h / 2]).precision(.1),
       "dataset" : 'data/feb-5-6-2008.csv'
     },
     "map_three" : {
@@ -458,16 +468,16 @@ torApp.prototype.RemovePoints = function( map ) {
 torApp.prototype.hover = function( d, map ) {
   app.exit();
   
-  var x2 = app.projection([d.longitude,d.latitude])[0] + Math.floor(Math.random()*80) + 60;
-  var y2 = app.projection([d.longitude,d.latitude])[1] + Math.floor(Math.random()*160) + 20;
+  var x2 = this.maps[ map ].projection([d.longitude,d.latitude])[0] + Math.floor(Math.random()*80) + 60;
+  var y2 = this.maps[ map ].projection([d.longitude,d.latitude])[1] + Math.floor(Math.random()*160) + 20;
   
   var line = app[ map ].append("svg:line")
     .attr('class', 'tip-line')
     .style("stroke", '#FFF')
-    .attr("x1", app.projection([d.longitude,d.latitude])[0])
-    .attr("y1", app.projection([d.longitude,d.latitude])[1])
-    .attr("x2", app.projection([d.longitude,d.latitude])[0])
-    .attr("y2", app.projection([d.longitude,d.latitude])[1])
+    .attr("x1", this.maps[ map ].projection([d.longitude,d.latitude])[0])
+    .attr("y1", this.maps[ map ].projection([d.longitude,d.latitude])[1])
+    .attr("x2", this.maps[ map ].projection([d.longitude,d.latitude])[0])
+    .attr("y2", this.maps[ map ].projection([d.longitude,d.latitude])[1])
     .transition()
       .duration(900)
       .attr("x2", x2)
@@ -510,15 +520,13 @@ torApp.prototype.exit = function() {
 torApp.prototype.playVideo = function( id ) {
   var self = this;
   var val = id.replace(/map_/g, '');
+
+  $('.content-container.'+id).fadeIn('slow');
   
-  //TODO remove 
-  //if (val != 'one') return;
-  console.log('val', val)
   var canvas = document.getElementById('video-'+val+'-canvas');
+  if ( !canvas ) return; 
   var ctx    = canvas.getContext('2d');
   var video  = document.getElementById('video-'+val);
-  
-  $('.content-container').fadeIn('slow');
   
   video.addEventListener('play', function () {
     var $this = this; //cache
@@ -538,20 +546,12 @@ torApp.prototype.playVideo = function( id ) {
     })();
     }, 0);
     video.play();  
-  
-  
-  
-  
-  
-  /*
-  var rotation = 0;
-  this.rotateVideo = setInterval( function() {
-    rotation++;
-    $('#video-one-canvas').css({'width': rotation-35+'px', '-webkit-transform' : 'rotate('+ rotation +'deg)',
-                 '-moz-transform' : 'rotate('+ rotation +'deg)',
-                 '-ms-transform' : 'rotate('+ rotation +'deg)',
-                 'transform' : 'rotate('+ rotation +'deg)'});
-    if ( rotation >= 360 ) clearInterval( self.rotateVideo );  
-  },0.1);
-  */
+}
+
+torApp.prototype.stopVideo = function( id ) {
+  if (!id) return;
+  var val = id.replace(/item_/g, '');
+  var video  = document.getElementById('video-'+val);
+  if (!video) return;
+  video.pause();
 }

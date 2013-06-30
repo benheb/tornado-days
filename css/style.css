@@ -145,6 +145,7 @@ path {
   width: 95px;
   text-align: center;
   margin-right: 3px;
+  font-size:20pt;
 }
 
 .stat .title {
@@ -177,6 +178,14 @@ path {
   z-index:200;
 }
 
+.about.map_two {
+  background: url(../images/supercell-co-bw.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .maps {
   position:absolute;
   z-index:50;
@@ -201,7 +210,7 @@ path {
   z-index: 60;
 }
 
-.storm-reports {
+.storm-reports, .storm-reports-large {
   cursor:pointer;
 }
 
@@ -257,6 +266,11 @@ path {
   text-align: center;
 }
 
+
+.bold {
+  font-weight:bold;
+}
+
 #item_one {
   /*background: url(../images/supercell.jpg) 50% 0 no-repeat fixed;*/  
 }
@@ -266,7 +280,12 @@ path {
 }
 
 #blurb-two {
-  background: url(../images/supercell05.png) right fixed !important; 
+  background: url(../images/supercell-co.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  left: 50px;
 }
 
 #blurb-three {
@@ -302,13 +321,15 @@ path {
   display: none;
   right: 71px;
   z-index: 1000;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .video-canvas {
   width:320px;
 }
 
-#video-two-canvas {
+#video-eight-canvas {
   width:100%;
   height:100%;
   margin:0px;
@@ -322,11 +343,23 @@ path {
   width:320px;
 }
 
-#video-two-container {
+#video-eight-container {
   width: 110%;
   height: 110%;
   z-index: 0;
   top: -60px;
   right:0px;
   left:-20px;
+}
+
+.content-container.map_one .info {
+  line-height: 38px;
+  font-size: 13pt;
+}
+
+.content-container.map_two {
+  line-height: 38px;
+  font-size: 13pt;
+  left:71px;
+  color:rgb(226, 226, 226)
 }
