@@ -40,12 +40,13 @@ var torApp = function() {
    * Section one
    */
   scrollorama.animate('#legend-one',{ duration: 700, property:'top', start:200,end: height - 40 });
-  scrollorama.animate('#content-one',{ duration: 500, property:'opacity', start:0,end:1 });
+  scrollorama.animate('#content-one',{ duration: 800, property:'opacity', start:0,end:1 });
   
   /*
    * Section two
    */
   scrollorama.animate('#section-two',{ duration: 300, property:'opacity', start:0,end:1 });
+  //scrollorama.animate('#blurb-two',{ duration: 500, property:'top', start: 0 - height,end: 0 });
   
   
 }
@@ -166,23 +167,13 @@ torApp.prototype.scrollControls = function() {
         
       }
       
-      //TODO HACK! "end" not working...?
-      //if ( id === "map_one") {
-        //setTimeout(function() {
-        //  self.playVideo( id )  
-        //},4500);
-      //} else {
-        //self.playVideo( id );
-     // }
-      
-      self.LoadPoints( id );
+      //self.LoadPoints( id );
       $(this).addClass('viewed');
     });
     
     $('.about').on('disappear', function() {
-      
+      $(this).removeClass('viewed');
       var id = $(this).attr('id');
-      $('#'+id+'_counties').hide();
       self.RemovePoints( id );
       self.stopVideo( id );
     }); 
@@ -366,8 +357,10 @@ torApp.prototype.addLand = function () {
         
            
       }
+      
+      self.LoadPoints( map.id );
     });
-    
+     
   });
   
 }
@@ -431,7 +424,7 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr("fill", "#FFFFFF")
         .attr('stroke', "rgb(255, 20, 0)")
         .attr('stroke-width', 0.6)
-        .attr('class', 'storm-reports-large')
+        .attr('class', 'storm-reports storm-reports-large')
         .attr('opacity', 0.5)
         .attr('id', map+'_graphic')
         .attr('d', function(d) {
@@ -490,7 +483,7 @@ torApp.prototype.LoadPoints = function( map ) {
 }
 
 torApp.prototype.RemovePoints = function( map ) {
-  $('.storm-reports').remove(); 
+  //$('.storm-reports').remove(); 
 }
 
 torApp.prototype.hover = function( d, map ) {
@@ -579,8 +572,11 @@ torApp.prototype.playVideo = function( id ) {
 
 torApp.prototype.stopVideo = function( id ) {
   if (!id) return;
-  var val = id.replace(/item_/g, '');
+  var val = id.replace(/section-/g, '');
   var video  = document.getElementById('video-'+val);
-  if (!video) return;
+  
+  if ( !video ) return;
+  console.log('stop this video: ', video)
   video.pause();
+  
 }
