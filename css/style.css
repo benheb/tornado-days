@@ -387,5 +387,9 @@ path {
   line-height: 38px;
   font-size: 13pt;
   left:71px;
-  color:rgb(226, 226, 226)
+  color:rgb(226, 226, 226);
+}
+
+#joplin-gif {
+  width: 320px;
 }
