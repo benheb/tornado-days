@@ -12,33 +12,34 @@
   
   <body class="no-scroll">
     
-    <div id="intro-map"></div>
-    <div id="intro-map-window-one" class="intro-diddy">
-      <div class="inner wbg">
-        <article>Tornadoes</article>
-        <div id="intro">8 Worst US Tornado Outbreaks of All Time</div>
-      </div>
-      <div id="scroll-tip-container">
-        <div class="pendulum">
-          
+    <section class="scrollblock">
+      <div id="intro-map"></div>
+      <div id="intro-map-window-one" class="intro-diddy">
+        <div class="inner wbg">
+          <article>Tornadoes</article>
+          <div id="intro">8 Worst US Tornado Outbreaks of All Time</div>
         </div>
+        <div id="scroll-tip-container">
+          <div class="pendulum">
+            
+          </div>
+        </div>
+  
       </div>
-
-    </div>
-    <!-- Intro -->
-    <section id="home" data-speed="4" data-type="background">
-      <div id="intro-map-window-two" class="intro-diddy">
-      <div class="inner wbg">
-        <article>Tornadoes</article>
-        <div id="intro">8 Worst US Tornado Outbreaks of All Time</div>
-      </div>
-
-      </div>
+      <!-- Intro -->
+      <section id="home" data-speed="4" data-type="background">
+        <div id="intro-map-window-two" class="intro-diddy">
+        <div class="inner wbg">
+          <article>Tornadoes</article>
+          <div id="intro">8 Worst US Tornado Outbreaks of All Time</div>
+        </div>
+  
+        </div>
+      </section>
     </section>
     
-    <!-- #8 -->
     <section class="scrollblock">
-      <div id="item_one" class="about" data-speed="4" data-type="background">
+      <div class="about map_one" data-speed="4" data-type="background" id="section-one">
         <div class="maps" id="map_one"></div>
         <div id="blurb-one" class="map-blurb map_one" data-speed="4">
           <div class="map-blurb-text" data-speed="10">
@@ -59,10 +60,10 @@
                 <div class="number">0</div>
               </span>
             </div>
-            <div class="legend-container map_one"></div>
+            <div class="legend-container map_one" id="legend-one"></div>
           </div> 
         </div>
-        <div class="content-container map_one">
+        <div class="content-container map_one" id="content-one">
           <canvas id="video-one-canvas" class="video-canvas"></canvas>
           <video id="video-one" muted class="video" loop>
             <source src=data/may-24-2011.mp4 type=video/mp4>
@@ -97,7 +98,7 @@
                 <div class="number">0</div>
               </span>
             </div>
-            <div class="legend-container map_two"></div>
+            <div class="legend-container map_two" id="legend-two"></div>
           </div> 
         </div>
         <div class="content-container map_two">

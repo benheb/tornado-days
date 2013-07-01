@@ -81,7 +81,9 @@ path {
 }
 
 .legend-container {
-  height:545px;
+  height:40px;
+  position:absolute;
+  width:320px;
 }
 
 #intro-map {
@@ -343,7 +345,6 @@ path {
   top: 190px;
   height: 481px;
   width: 320px;
-  display: none;
   right: 71px;
   z-index: 1000;
   overflow: hidden;

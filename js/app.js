@@ -16,7 +16,7 @@ $(document).ready(function(){
   $('.maps').css( { 'width': $(window).width()+'px', 'height': height+'px'});
   $('.about').css('height', height+'px');
   $('.map-blurb').css('height', height+'px');
-  $('.legend-container').css('height', height - 220 + 'px');
+  $('.legend-container').css('top', height - 60 + 'px');
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
@@ -35,7 +35,19 @@ var torApp = function() {
     enablePin:false
   });
   
-  scrollorama.animate('#section-two',{ duration: 300, property:'opacity', start:0.1,end:1 });
+  var height = $(window).height();
+  /*
+   * Section one
+   */
+  scrollorama.animate('#legend-one',{ duration: 700, property:'top', start:200,end: height - 40 });
+  scrollorama.animate('#content-one',{ duration: 500, property:'opacity', start:0,end:1 });
+  
+  /*
+   * Section two
+   */
+  scrollorama.animate('#section-two',{ duration: 300, property:'opacity', start:0,end:1 });
+  
+  
 }
  
 torApp.prototype.scrollControls = function() {
@@ -137,6 +149,7 @@ torApp.prototype.scrollControls = function() {
       
       //Add "viewed" class to know it has been initiated ONCE
       if ( !($(this).hasClass('viewed')) ) {
+        /*
         var h = $(window).height() - 220;
         //Legend animation
         self["legend_"+id].selectAll(".legend-dots")
@@ -146,16 +159,21 @@ torApp.prototype.scrollControls = function() {
           .ease("bounce")
             .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( h - d.radius )) + ")";})
             .attr('r', function(d) { return d.radius })
+        */
+        //setTimeout(function() {
+          self.playVideo( id )  
+        //},4500);
+        
       }
       
       //TODO HACK! "end" not working...?
-      if ( id === "map_one") {
-        setTimeout(function() {
-          self.playVideo( id )  
-        },3500);
-      } else {
-        self.playVideo( id );
-      }
+      //if ( id === "map_one") {
+        //setTimeout(function() {
+        //  self.playVideo( id )  
+        //},4500);
+      //} else {
+        //self.playVideo( id );
+     // }
       
       self.LoadPoints( id );
       $(this).addClass('viewed');
@@ -531,7 +549,7 @@ torApp.prototype.playVideo = function( id ) {
   var self = this;
   var val = id.replace(/map_/g, '');
 
-  $('.content-container.'+id).fadeIn('slow');
+  //$('.content-container.'+id).fadeIn('slow');
   
   var canvas = document.getElementById('video-'+val+'-canvas');
   if ( !canvas ) return; 
@@ -555,6 +573,7 @@ torApp.prototype.playVideo = function( id ) {
         }
     })();
     }, 0);
+    console.log('play', id)
     video.play();  
 }
 
