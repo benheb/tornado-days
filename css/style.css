@@ -1,16 +1,18 @@
-/**
- * Parallax Scrolling Tutorial
- * For NetTuts+
- *  
- * Author: Mohiuddin Parekh
- *  http://www.mohi.me
- *  @mohiuddinparekh   
- */
-
-
 body{
   margin:0;
   padding:0;
+}
+
+#footer {
+  height:160px;
+  box-shadow: 10px 10px 10px 10px #444;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSI+CjxyZWN0IHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzI4MjgyOCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzIiBjeT0iNC4zIiByPSIxLjgiIGZpbGw9IiMzOTM5MzkiPjwvY2lyY2xlPgo8Y2lyY2xlIGN4PSIzIiBjeT0iMyIgcj0iMS44IiBmaWxsPSJibGFjayI+PC9jaXJjbGU+CjxjaXJjbGUgY3g9IjEwLjUiIGN5PSIxMi41IiByPSIxLjgiIGZpbGw9IiMzOTM5MzkiPjwvY2lyY2xlPgo8Y2lyY2xlIGN4PSIxMC41IiBjeT0iMTEuMyIgcj0iMS44IiBmaWxsPSJibGFjayI+PC9jaXJjbGU+Cjwvc3ZnPg==");
+  color:#FEFEFE;
+  padding:10px;
+}
+
+#footer-inner {
+  
 }
 
 .no-scroll {
@@ -32,6 +34,11 @@ body{
 .states-partial {
   stroke:#666;
   fill: #444;
+}
+
+.states-faded {
+  fill:#FEFEFE;
+  stroke:#EEE;
 }
 
 .counties-partial {
@@ -175,7 +182,10 @@ path {
 }
 
 #home { 
-  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed; 
+  background: url(../images/intro-tornado.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; 
   height: 1000px;  
   margin: 0 auto; 
     width: 100%; 
@@ -212,6 +222,10 @@ path {
   background-size: cover;
 }
 
+#scrollblock-eight {
+  box-shadow: 0px 4px 36px -4px #444;
+}
+
 .maps {
   position:absolute;
   z-index:50;
@@ -223,7 +237,7 @@ path {
   color: rgb(79, 96, 114);
   z-index: 100;
   position: absolute;
-  top: 0px;
+  top: 5px;
   right: 50px;
   width: 320px;
   padding: 20px;
@@ -269,12 +283,15 @@ path {
   font-weight: bold;
   font-family: fantasy;
   text-align: center;
-  color:rgb(49, 49, 49);
+  color:#000;
   position:fixed;
 }
 
 #intro-map-window-one .inner.wbg {
-  background: url(../images/wichita-tor.jpg) 50% 0 no-repeat fixed;
+  background: url(../images/intro-tornado.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; 
   box-shadow: inset 0px 0px 19px 3px #777;
   overflow: hidden;
 }
@@ -312,11 +329,11 @@ path {
   -o-background-size: cover;
   background-size: cover;
   left: 50px;
-  opacity:0.9
+  opacity:0.9;
 }
 
 #blurb-three {
-  background: url(../images/may-22-2011-1.png) right fixed !important;
+  background: #EEE;
 }
 
 #blurb-four {
@@ -392,4 +409,8 @@ path {
 
 #joplin-gif {
   width: 320px;
+}
+
+#joplin-image {
+  width:320px;
 }

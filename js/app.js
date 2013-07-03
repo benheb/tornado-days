@@ -15,7 +15,7 @@ $(document).ready(function(){
   //setup UI
   $('.maps').css( { 'width': $(window).width()+'px', 'height': height+'px'});
   $('.about').css('height', height+'px');
-  $('.map-blurb').css('height', height+'px');
+  $('.map-blurb').css('height', height - 50 + 'px');
   $('.legend-container').css('top', height - 60 + 'px');
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
@@ -39,8 +39,8 @@ var torApp = function() {
   /*
    * Section one
    */
-  scrollorama.animate('#legend-one',{ duration: 700, property:'top', start:200,end: height - 40 });
-  scrollorama.animate('#content-one',{ duration: 800, property:'opacity', start:0,end:1 });
+  //scrollorama.animate('#map_one',{ duration: 100, property:'display', start:"none",end: "block" });
+  //scrollorama.animate('#content-one',{ duration: 800, property:'opacity', start:0,end:1 });
   
   /*
    * Section two
@@ -48,6 +48,26 @@ var torApp = function() {
   scrollorama.animate('#section-two',{ duration: 300, property:'opacity', start:0,end:1 });
   //scrollorama.animate('#blurb-two',{ duration: 500, property:'top', start: 0 - height,end: 0 });
   
+  /*
+   * Section three
+   * 
+   */
+  scrollorama.animate('#blurb-three',{ duration: 600, property:'top', start:-height,end:0 });
+  scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-right', start:-345,end:0 });
+  
+  /*
+   * 
+   * Section four
+   * 
+   */
+  //scrollorama.animate('#section-four',{ duration: 500, property:'height', start:0,end:height });
+  
+  
+  /*
+   * Footer
+   * 
+   */
+  scrollorama.animate('#footer',{ duration: 100, property:'height', start:0,end:160 });
   
 }
  
@@ -116,7 +136,6 @@ torApp.prototype.scrollControls = function() {
             });
             
             $('.about').removeClass('viewed');
-            self.updateLegend();
         }
         
         this.prev_pos = pos;
@@ -147,27 +166,8 @@ torApp.prototype.scrollControls = function() {
       
       //set current visible section
       self.active = id;
-      
-      //Add "viewed" class to know it has been initiated ONCE
-      if ( !($(this).hasClass('viewed')) ) {
-        /*
-        var h = $(window).height() - 220;
-        //Legend animation
-        self["legend_"+id].selectAll(".legend-dots")
-          .transition()
-          .delay(function( d, i ) { return Math.floor((Math.random()*3000)+300); })
-          .duration( 4000 )
-          .ease("bounce")
-            .attr("transform", function(d) { return "translate(" + d.x + "," + (d.y + ( h - d.radius )) + ")";})
-            .attr('r', function(d) { return d.radius })
-        */
-        //setTimeout(function() {
-          self.playVideo( id )  
-        //},4500);
-        
-      }
-      
-      //self.LoadPoints( id );
+      self.playVideo( id )  
+      self.LoadPoints( id );
       $(this).addClass('viewed');
     });
     
@@ -177,62 +177,6 @@ torApp.prototype.scrollControls = function() {
       self.RemovePoints( id );
       self.stopVideo( id );
     }); 
-}
-
-torApp.prototype.update = function() {
-  var height = window.innerHeight || $(window).height();
-  
-  this.active = this.active || "map_one";
-  $('.maps').css( {'pointer-events': 'none' });
-  
-  var rect = $('#'+this.active).parent()[ 0 ].getBoundingClientRect();
-  var position = $('#'+this.active).css("position");
-  
-  if ( rect.top > 0 && rect.bottom > height ) {
-    $('#'+this.active).parent().css( "overflow-y", 'hidden' );
-    $('#'+this.active).css( {'position': 'relative' });
-  } else if ( rect.top < 0 && rect.bottom > height ) {
-    $('#'+this.active).parent().css( "overflow-y", 'auto' );
-    $('#'+this.active).css( {'position': 'fixed', 'left': '0px', 'top' : '0px'});
-  } else if ( rect.top < 0 && rect.bottom < height ) {
-    //$('#'+this.active).parent().css( "overflow-y", 'hidden' );
-    //$('#'+this.active).css( {'position': 'relative' });
-  }
-  
-  //else
-  //    $('#'+this.active).parent().css('visibility', 'visible');
-
-  //} else {
-  //    if (position != 'absolute')
-         // $('#'+this.active).parent().css('position', 'absolute');
-  //}
-/*
-  if ((rect.top > height) || (rect.bottom < 0))
-      this.el.style.visibility = 'hidden';
-  else
-      this.el.style.visibility = 'visible';
-
-  if (rect.top < 0 && rect.bottom > height) {
-      if (position != 'fixed')
-          this.$el.css('position', 'fixed');
-  } else {
-      if (position != 'absolute')
-          this.$el.css('position', 'absolute');
-  }
-  if (rect.bottom <= height) {
-      if (this.attachment != 'bottom') {
-          this.$el.css('top', 'auto');
-          this.$el.css('bottom', '0');
-      }
-      this.attachment = 'bottom';
-  } else {
-      if (this.attachment != 'top') {
-          this.$el.css('top', '0');
-          this.$el.css('bottom', 'auto');
-      }
-      this.attachment = 'top';
-    }
-    */
 }
 
 torApp.prototype.createMap = function() {
@@ -256,12 +200,12 @@ torApp.prototype.createMap = function() {
     },
     "map_three" : {
       "id": "map_three", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]),
+      "projection" : d3.geo.mercator().scale(2500).center([-90, 39]).translate([w / 2, h / 2]).precision(.1),
       "dataset" : 'data/may-22-2011.csv'
     },
     "map_four" : {
       "id": "map_four", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale(3300).center([3, 36]).translate([w / 2, h / 2]), 
       "dataset" : 'data/may-3-1999.csv' 
     },
     "map_five" : {  
@@ -322,12 +266,7 @@ torApp.prototype.addLand = function () {
     
     d3.json("data/world.json", function(error, world) {
       //console.log('world', world)
-      /*self[ map[ "id" ] ].insert("path")
-        .datum(topojson.feature(world, world.objects.world))
-        .attr('class', 'world')
-        .attr("d", self.path);
-      */
-      if ( id !== 'map_two' ) {
+      if ( id !== 'map_two' && id !== 'map_three' && id !== "map_four" ) {
         self[ id ].insert("path")
           .datum(topojson.feature(world, world.objects.states))
           .attr('class', 'states')
@@ -339,7 +278,7 @@ torApp.prototype.addLand = function () {
           .attr('class', 'lakes')
           .attr("d", path);
           
-      } else {
+      } else if ( id === "map_two" ) {
         self[ id ].append("g")
           .attr("class", "states")
         .selectAll("path")
@@ -354,11 +293,40 @@ torApp.prototype.addLand = function () {
             }
           })
           .attr("d", path);
-        
-           
+      } else if ( id === "map_three" ) {
+        self[ id ].append("g")
+          .attr("class", "states")
+        .selectAll("path")
+          .data(topojson.feature(world, world.objects.states).features)
+        .enter().append("path")
+          .attr('id', function(d) { return d.id })
+          .attr("class", function(d) {
+            if ( d.id === 27 || d.id === 55 || d.id === 48 || d.id === 18 || d.id === 17 || d.id === 19 || d.id === 5 || d.id === 29 || d.id === 26 || d.id === 20 || d.id === 40 ) {
+              return "states-partial";
+            } else {
+              return "states-hidden";
+            }
+          })
+          .attr("d", path);
+      } else if ( id === "map_four" ) {
+        self[ id ].append("g")
+          .attr("class", "states")
+        .selectAll("path")
+          .data(topojson.feature(world, world.objects.states).features)
+        .enter().append("path")
+          .attr('id', function(d) { return d.id })
+          .attr("class", function(d) {
+            //31 21 40
+            if ( d.id === 31 || d.id === 20 || d.id === 40) {
+              return "states-partial";
+            } else {
+              return "states-faded";
+            }
+          })
+          .attr("d", path);
       }
       
-      self.LoadPoints( map.id );
+      //self.LoadPoints( map.id );
     });
      
   });
@@ -375,11 +343,11 @@ torApp.prototype.updateLegend = function() {
   $.each( legends, function(i, leg) {
     var dots = self["legend_"+leg].append('g');
     var legend = [ 
-      { radius: 3, x: 5, y: 4 }, 
-      { radius: 5, x: 50, y: 6 }, 
-      { radius: 7, x: 100, y: 8 }, 
-      { radius: 10, x: 160, y: 11 }, 
-      { radius: 14, x: 230, y: 15 },
+      { radius: 3, x: 5, y: 20 }, 
+      { radius: 5, x: 50, y: 20 }, 
+      { radius: 7, x: 100, y: 20 }, 
+      { radius: 10, x: 160, y: 20 }, 
+      { radius: 14, x: 230, y: 20 },
       { radius: 19, x: 300, y: 20 } 
     ];
     
@@ -565,9 +533,9 @@ torApp.prototype.playVideo = function( id ) {
             setTimeout(loop, 1000 / 60); // drawing at 30fps
         }
     })();
-    }, 0);
-    console.log('play', id)
-    video.play();  
+  }, 0);
+    
+  video.play();  
 }
 
 torApp.prototype.stopVideo = function( id ) {
