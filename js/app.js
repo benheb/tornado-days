@@ -53,7 +53,7 @@ var torApp = function() {
    * 
    */
   scrollorama.animate('#blurb-three',{ duration: 600, property:'top', start:-height,end:0 });
-  scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-right', start:-345,end:0 });
+  //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
   
   /*
    * 
