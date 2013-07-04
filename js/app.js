@@ -20,6 +20,17 @@ $(document).ready(function(){
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
+  $('#header').on('mouseover', function() {
+    $('#header-inner').slideDown('fast', function() {
+      $('#credit').show();
+    });
+  });
+  
+  $('#header').on('mouseout', function() {
+    $('#credit').hide();
+    $('#header-inner').slideUp('fast');
+  });
+  
   app = new torApp();
 }); 
 
@@ -36,6 +47,7 @@ var torApp = function() {
   });
   
   var height = $(window).height();
+  var width = $(window).width();
   /*
    * Section one
    */
@@ -52,7 +64,7 @@ var torApp = function() {
    * Section three
    * 
    */
-  scrollorama.animate('#blurb-three',{ duration: 600, property:'top', start:-height,end:0 });
+  scrollorama.animate('#blurb-three',{ duration: 400, property:'top', delay:200, start:-height,end:0 });
   //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
   
   /*
@@ -62,6 +74,12 @@ var torApp = function() {
    */
   //scrollorama.animate('#section-four',{ duration: 500, property:'height', start:0,end:height });
   
+  
+  /*
+   * Section SIX
+   * 
+   */
+  scrollorama.animate('#blurb-six',{ duration: 300, property:'right', delay:420, start:width,end:0 });
   
   /*
    * Footer
@@ -176,7 +194,7 @@ torApp.prototype.scrollControls = function() {
       var id = $(this).attr('id');
       self.RemovePoints( id );
       self.stopVideo( id );
-    }); 
+    });
 }
 
 torApp.prototype.createMap = function() {
@@ -215,7 +233,7 @@ torApp.prototype.createMap = function() {
     } ,
     "map_six" : { 
       "id": "map_six", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale(2100).center([5, 33]).clipAngle(90).translate([w / 2, h / 2]), 
       "dataset" : 'data/apr-11-12-1965.csv'
     },
     "map_seven" : { 
@@ -241,8 +259,10 @@ torApp.prototype.createMap = function() {
     
     var id = map.id;
     self[ id ] = d3.select("#"+ id).append("svg");
-    self[ "legend_"+ id ] = d3.select( '.legend-container.'+ id ).append( "svg" );
+    //self[ "legend_"+ id ] = d3.select( '.legend-container.'+ id ).append( "svg" );
   });
+  
+  this.legend = d3.select('#legend').append( "svg" );
   
   this.scales = {
      0: 3,
@@ -336,12 +356,12 @@ torApp.prototype.addLand = function () {
 //Sets initial legend DOT positions
 torApp.prototype.updateLegend = function() {
   var self = this;
+  console.log('update legend')
+  //d3.selectAll('.legend-dots').remove();
   
-  d3.selectAll('.legend-dots').remove();
-  
-  var legends = ["map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight"];
-  $.each( legends, function(i, leg) {
-    var dots = self["legend_"+leg].append('g');
+  //var legends = ["map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight"];
+  //$.each( legends, function(i, leg) {
+    var dots = this.legend.append('g');
     var legend = [ 
       { radius: 3, x: 5, y: 20 }, 
       { radius: 5, x: 50, y: 20 }, 
@@ -361,7 +381,7 @@ torApp.prototype.updateLegend = function() {
       .attr('opacity', 0.8)
       .attr('class', 'legend-dots')
       .attr('r', function(d) { return d.radius });
-  });
+  //});
   
 }
 
@@ -477,6 +497,7 @@ torApp.prototype.hover = function( d, map ) {
   
   var damages = ( d.damages ) ? d.damages : 'n/a'
   var content = '\
+    <span>Rating: '+ d.scale + '</span><br />\
     <span>Date: '+ d.date + '</span><br />\
     <span>'+ d.county + ', '+d.state+'</span><br />\
     <span>Damages: '+ damages + '</span><br />'
