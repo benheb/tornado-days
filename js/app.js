@@ -20,6 +20,7 @@ $(document).ready(function(){
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
+  //show hide header 
   $('#header').on('mouseover', function() {
     $('#header-inner').slideDown('fast', function() {
       $('#credit').show();
@@ -64,7 +65,7 @@ var torApp = function() {
    * Section three
    * 
    */
-  scrollorama.animate('#blurb-three',{ duration: 400, property:'top', delay:200, start:-height,end:0 });
+  scrollorama.animate('#section-three',{ duration: height, property:'top', start:-height,end:0 });
   //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
   
   /*
@@ -72,7 +73,7 @@ var torApp = function() {
    * Section four
    * 
    */
-  //scrollorama.animate('#section-four',{ duration: 500, property:'height', start:0,end:height });
+  //scrollorama.animate('#video-four',{ duration: 500, property:'volume', start:0,end:0.9 });
   
   
   /*
@@ -109,8 +110,8 @@ torApp.prototype.scrollControls = function() {
   });
   
   $window = $(window);
-    $('section[data-type="background"]').each(function(){
-      var $bg = $(this);
+    //$('section[data-type="background"]').each(function(){
+      var $bg = $('#home');
       var $wbg = $('#intro-map-window .inner.wbg');
       
       $(window).scroll(function(e) {
@@ -174,7 +175,7 @@ torApp.prototype.scrollControls = function() {
         }
         
       });
-    });
+    //});
     
     
     //Detect when sections appear 
@@ -223,7 +224,7 @@ torApp.prototype.createMap = function() {
     },
     "map_four" : {
       "id": "map_four", 
-      "projection" : d3.geo.albers().scale(3500).center([7, 36]).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale(3500).center([6, 36]).translate([w / 2, h / 2]), 
       "dataset" : 'data/may-3-1999.csv' 
     },
     "map_five" : {  
@@ -256,10 +257,8 @@ torApp.prototype.createMap = function() {
 
   var maps = [ "map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight", ]
   $.each( this.maps, function( i, map) {
-    
     var id = map.id;
     self[ id ] = d3.select("#"+ id).append("svg");
-    //self[ "legend_"+ id ] = d3.select( '.legend-container.'+ id ).append( "svg" );
   });
   
   this.legend = d3.select('#legend').append( "svg" );
@@ -345,8 +344,6 @@ torApp.prototype.addLand = function () {
           })
           .attr("d", path);
       }
-      
-      //self.LoadPoints( map.id );
     });
      
   });
@@ -356,32 +353,26 @@ torApp.prototype.addLand = function () {
 //Sets initial legend DOT positions
 torApp.prototype.updateLegend = function() {
   var self = this;
-  console.log('update legend')
-  //d3.selectAll('.legend-dots').remove();
+  var dots = this.legend.append('g');
+  var legend = [ 
+    { radius: 3, x: 5, y: 20 }, 
+    { radius: 5, x: 50, y: 20 }, 
+    { radius: 7, x: 100, y: 20 }, 
+    { radius: 10, x: 160, y: 20 }, 
+    { radius: 14, x: 230, y: 20 },
+    { radius: 19, x: 300, y: 20 } 
+  ];
   
-  //var legends = ["map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight"];
-  //$.each( legends, function(i, leg) {
-    var dots = this.legend.append('g');
-    var legend = [ 
-      { radius: 3, x: 5, y: 20 }, 
-      { radius: 5, x: 50, y: 20 }, 
-      { radius: 7, x: 100, y: 20 }, 
-      { radius: 10, x: 160, y: 20 }, 
-      { radius: 14, x: 230, y: 20 },
-      { radius: 19, x: 300, y: 20 } 
-    ];
-    
-    dots.selectAll("circle")
-      .data( legend )
-    .enter().insert("circle")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";})
-      .attr("fill", "#FEFEFE")
-      .attr('stroke', "rgb(255, 20, 0)")
-      .attr('stroke-width', 0.6)
-      .attr('opacity', 0.8)
-      .attr('class', 'legend-dots')
-      .attr('r', function(d) { return d.radius });
-  //});
+  dots.selectAll("circle")
+    .data( legend )
+  .enter().insert("circle")
+    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";})
+    .attr("fill", "#FEFEFE")
+    .attr('stroke', "rgb(255, 20, 0)")
+    .attr('stroke-width', 0.6)
+    .attr('opacity', 0.8)
+    .attr('class', 'legend-dots')
+    .attr('r', function(d) { return d.radius });
   
 }
 
@@ -410,10 +401,17 @@ torApp.prototype.LoadPoints = function( map ) {
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
         .attr("fill", "#FFFFFF")
-        .attr('stroke', "rgb(255, 20, 0)")
-        .attr('stroke-width', 0.6)
+        //.attr('stroke', "rgb(255, 20, 0)")
+        .attr('stroke', '#00CDCD')
+        .attr('stroke-width', function(d) {
+          if ( d.county === "Newton" && parseFloat(d.scale) === 5 ) {
+            return 3
+          } else {
+            return 0.7;
+          }
+        })
         .attr('class', 'storm-reports storm-reports-large')
-        .attr('opacity', 0.5)
+        .attr('opacity', 0.8)
         .attr('id', map+'_graphic')
         .attr('d', function(d) {
           injured = injured + parseInt( d.injuries );
@@ -462,10 +460,10 @@ torApp.prototype.LoadPoints = function( map ) {
         .data(rows)
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
-        .attr("fill", "#ff3322") //#ff3322
+        .attr("fill", "#37a075") //#ff3322
         .attr('class', 'storm-reports')
         .attr('id', map+'_graphic')
-        .attr('r', 0.5);
+        .attr('r', 0.6);
       
      });
 }
@@ -556,7 +554,8 @@ torApp.prototype.playVideo = function( id ) {
     })();
   }, 0);
     
-  video.play();  
+  video.play();
+  video.volume = 0.2  
 }
 
 torApp.prototype.stopVideo = function( id ) {
@@ -565,7 +564,6 @@ torApp.prototype.stopVideo = function( id ) {
   var video  = document.getElementById('video-'+val);
   
   if ( !video ) return;
-  console.log('stop this video: ', video)
   video.pause();
   
 }
