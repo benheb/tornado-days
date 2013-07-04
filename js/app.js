@@ -223,7 +223,7 @@ torApp.prototype.createMap = function() {
     },
     "map_four" : {
       "id": "map_four", 
-      "projection" : d3.geo.albers().scale(3300).center([3, 36]).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale(3500).center([7, 36]).translate([w / 2, h / 2]), 
       "dataset" : 'data/may-3-1999.csv' 
     },
     "map_five" : {  

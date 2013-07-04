@@ -72,8 +72,8 @@ body{
 }
 
 .states-faded {
-  fill:#FEFEFE;
-  stroke:#EEE;
+  fill: rgb(221, 221, 221);
+  stroke: rgb(150, 150, 150);
 }
 
 .counties-partial {
@@ -369,7 +369,14 @@ path {
 }
 
 #blurb-four {
-  background: url(../images/may-3-1999-1.png) right fixed !important; 
+  width: 650px;
+  background: #FEFEFE;
+  opacity:1;
+}
+
+#blurb-four .map-blurb-text {
+  width: 321px;
+  float: right;
 }
 
 #blurb-five {
@@ -433,6 +440,11 @@ path {
   left:-20px;
 }
 
+#video-four-container {
+  top: 10px;
+  left: 14px;
+}
+
 .info {
   line-height: 38px;
   font-size: 13pt;
@@ -445,6 +457,14 @@ path {
   top: 51px;
   font-weight:normal;
   color: #444;
+}
+
+#blurb-four .info {
+  width: 640px;
+  font-weight: normal;
+  color: #444;
+  overflow: hidden;
+  text-align: center;
 }
 
 .content-container.map_one .info {
