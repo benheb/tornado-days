@@ -14,9 +14,8 @@ $(document).ready(function(){
   
   //setup UI
   $('.maps').css( { 'width': $(window).width()+'px', 'height': height+'px'});
-  $('.about').css('height', height+'px');
-  $('.map-blurb').css('height', height - 50 + 'px');
-  $('.legend-container').css('top', height - 60 + 'px');
+  $('.about').css('height', height+40+'px');
+  $('.map-blurb').css('height', height - 40 + 'px');
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
@@ -65,7 +64,7 @@ var torApp = function() {
    * Section three
    * 
    */
-  scrollorama.animate('#section-three',{ duration: height, property:'top', start:0,end:0 });
+  scrollorama.animate('#section-three',{ duration: height, property:'top', start:-height,end:0 });
   //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
   
   /*

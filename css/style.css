@@ -305,18 +305,17 @@ path {
 }
 
 .intro-diddy {
-  display:none;
+  display: none;
   height: 191px;
   z-index: 115;
-  position: absolute;
   top: 35%;
   width: 100%;
-  font-size: 166px;
-  font-weight: bold;
-  font-family: fantasy;
+  font-size: 131px;
   text-align: center;
-  color:#000;
-  position:fixed;
+  color: rgb(12, 10, 10);
+  position: fixed;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
+  text-transform: uppercase;
 }
 
 #intro-map-window-one .inner.wbg {
@@ -333,12 +332,11 @@ path {
 }
 
 .intro-diddy #intro { 
-  height: 150px;
   width: 100%;
-  font-size: 28px;
-  font-weight: bold;
-  font-family: fantasy;
+  font-size: 31px;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
   text-align: center;
+  margin-top: -15px;
 }
 
 
