@@ -13,7 +13,7 @@ $(document).ready(function(){
   var height = $(window).height() + 20;
   
   //setup UI
-  $('.maps').css( { 'width': $(window).width()+'px', 'height': height+'px'});
+  $('.maps').css( { 'width': $(window).width()+'px', 'height': height+40+'px'});
   $('.about').css('height', height+40+'px');
   $('.map-blurb').css('height', height - 40 + 'px');
   $('#home').css('height', height+'px');
