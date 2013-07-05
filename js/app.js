@@ -65,7 +65,7 @@ var torApp = function() {
    * Section three
    * 
    */
-  scrollorama.animate('#section-three',{ duration: height, property:'top', start:-height,end:0 });
+  scrollorama.animate('#section-three',{ duration: height, property:'top', start:0,end:0 });
   //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
   
   /*
@@ -401,8 +401,8 @@ torApp.prototype.LoadPoints = function( map ) {
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
         .attr("fill", "#FFFFFF")
-        //.attr('stroke', "rgb(255, 20, 0)")
-        .attr('stroke', '#00CDCD')
+        .attr('stroke', "rgb(255, 20, 0)")
+        //.attr('stroke', '#00CDCD')
         .attr('stroke-width', function(d) {
           if ( d.county === "Newton" && parseFloat(d.scale) === 5 ) {
             return 3
