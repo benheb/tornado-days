@@ -47,7 +47,7 @@ torApp.prototype.intro = function() {
   
   function animation() {
     self.intro_svg.transition()
-        .duration(70)
+        .duration(7000)
         .style('opacity', 1)
         .tween("projection", function( i ) {
           var itr = 0;
