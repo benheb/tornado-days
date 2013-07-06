@@ -22,19 +22,47 @@ body{
   padding-top: 7px;
 }
 
+#legend-outer {
+  width: 335px;
+  margin: auto;
+  position:relative;
+}
+#legend-low {
+  position: absolute;
+  left: -130px;
+  top: 5px;
+  font-size: 17pt;
+  color: #FFF;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
+}
+#legend-high {
+  position: absolute;
+  right: 23px;
+  top: 7px;
+  font-size: 15pt;
+  color: #000;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
+}
 #legend {
   width: 335px;
   margin: auto;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
 }
 
+#twitter-share {
+  right:0px;
+  top:3px;
+  position:absolute;
+}
 #credit {
   position: absolute;
   right: 10px;
   top: 5px;
-  width: 200px;
+  width: 255px;
   border-left: 1px solid #FEFEFE;
   color: #FEFEFE;
   padding-left: 13px;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
   height: 45px;
 }
 
@@ -72,8 +100,9 @@ body{
 }
 
 .states-faded {
-  fill: rgb(221, 221, 221);
-  stroke: rgb(150, 150, 150);
+  fill: rgb(245, 245, 245);
+  stroke: rgb(214, 214, 214);
+  opacity: 0.5;
 }
 
 .counties-partial {
@@ -379,10 +408,18 @@ path {
 
 #blurb-six .map-blurb-text {
   width: 321px;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 
 #blurb-five {
-  background: url(../images/nov-22-1992.png) right fixed !important;
+  /*background: url(../images/nov-22-1992.png) right fixed !important;*/
+ overflow:visible;
+}
+
+#blurb-five img {
+  position: absolute;
+  right:10px;
 }
 
 #blurb-six {
@@ -455,8 +492,13 @@ path {
 #blurb-six .info {
   width: 700px;
   position: absolute;
-  left: 332px;
+  left: 347px;
   top: 5px;
+  font-weight: normal;
+  color: #444;
+}
+
+#blurb-five .info {
   font-weight: normal;
   color: #444;
 }

@@ -404,7 +404,8 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr('stroke', "rgb(255, 20, 0)")
         //.attr('stroke', '#00CDCD')
         .attr('stroke-width', function(d) {
-          if ( d.county === "Newton" && parseFloat(d.scale) === 5 ) {
+          if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
+                  d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
             return 3
           } else {
             return 0.7;
@@ -500,8 +501,8 @@ torApp.prototype.RemovePoints = function( map ) {
 torApp.prototype.hover = function( d, map ) {
   app.exit();
   
-  var x2 = this.maps[ map ].projection([d.longitude,d.latitude])[0] + Math.floor(Math.random()*80) + 60;
-  var y2 = this.maps[ map ].projection([d.longitude,d.latitude])[1] + Math.floor(Math.random()*160) + 20;
+  var x2 = this.maps[ map ].projection([d.longitude,d.latitude])[0] + Math.floor(Math.random()*20) + 60;
+  var y2 = this.maps[ map ].projection([d.longitude,d.latitude])[1] + Math.floor(Math.random()*60) + 10;
   
   var line = app[ map ].append("svg:line")
     .attr('class', 'tip-line')
@@ -521,6 +522,8 @@ torApp.prototype.hover = function( d, map ) {
   var damages = ( d.damages ) ? d.damages : 'n/a'
   var content = '\
     <span>Rating: '+ d.scale + '</span><br />\
+    <span>Injuries: '+ d.injuries + '</span><br />\
+    <span>Fatalities: '+ d.fatalities + '</span><br />\
     <span>Date: '+ d.date + '</span><br />\
     <span>'+ d.county + ', '+d.state+'</span><br />\
     <span>Damages: '+ damages + '</span><br />'
