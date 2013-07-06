@@ -384,7 +384,8 @@ torApp.prototype.LoadPoints = function( map ) {
   
   d3.csv( this.maps[ map ].dataset )
     .row(function(d) { return { date: d.Date, scale: d.Fujita, county: d.County1,
-      state: d.State1, latitude: d.TouchdownLat, longitude: d.TouchdownLon, damages: d.Damage, injuries: d.Injuries, fatalities: d.Fatalities}; })
+      state: d.State1, latitude: d.TouchdownLat, longitude: d.TouchdownLon, damages: d.Damage,
+      endLat: d.LiftoffLat, endLon: d.LiftoffLon, injuries: d.Injuries, fatalities: d.Fatalities}; })
     .get(function(error, rows) {
       var injured = 0;
       var cost = 0;
@@ -410,7 +411,7 @@ torApp.prototype.LoadPoints = function( map ) {
           }
         })
         .attr('class', 'storm-reports storm-reports-large')
-        .attr('opacity', 0.8)
+        .attr('opacity', 0.7)
         .attr('id', map+'_graphic')
         .attr('d', function(d) {
           injured = injured + parseInt( d.injuries );
@@ -439,7 +440,7 @@ torApp.prototype.LoadPoints = function( map ) {
               })
             .transition()
             .duration(400)
-              .attr('opacity', 0.5)
+              .attr('opacity', 0.7)
               .attr('r', function() { 
                 var size = ( d.scale == undefined ) ? 1 : self.scales[d.scale];
                 return size; 
@@ -459,12 +460,37 @@ torApp.prototype.LoadPoints = function( map ) {
         .data(rows)
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
-        .attr("fill", "#37a075") //#ff3322
+        .attr("fill", "rgb(255, 20, 0)")
+        .attr('opacity', 0.6)
         .attr('class', 'storm-reports')
         .attr('id', map+'_graphic')
-        .attr('r', 0.6);
+        .attr('r', 0.5);
       
      });
+}
+
+torApp.prototype.drawLines = function( d, map ) {
+  var self = this;
+  if (d.endLat != "-") {
+    var lines = self[ map ].append('g');
+    var projection = self.maps[ map ].projection;
+    
+    lines.selectAll("line")
+      .data([d])
+    .enter().append('line')
+      .style("stroke", '#FFF')
+      .attr('class', 'tornado-paths-'+map)
+      .style('display', 'none')
+      .attr("x1", projection([d.longitude,d.latitude])[0])
+      .attr("y1", projection([d.longitude,d.latitude])[1])
+      .attr("x2", projection([d.longitude,d.latitude])[0])
+      .attr("y2", projection([d.longitude,d.latitude])[1])
+      .transition()
+        .duration(2000)
+        .attr("x2", projection([d.endLon,d.endLat])[0])
+        .attr("y2", projection([d.endLon,d.endLat])[1]);
+        
+  }    
 }
 
 torApp.prototype.RemovePoints = function( map ) {

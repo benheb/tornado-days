@@ -377,6 +377,10 @@ path {
   float: right;
 }
 
+#blurb-six .map-blurb-text {
+  width: 321px;
+}
+
 #blurb-five {
   background: url(../images/nov-22-1992.png) right fixed !important;
 }
@@ -449,11 +453,11 @@ path {
 }
 
 #blurb-six .info {
-  width: 600px;
+  width: 700px;
   position: absolute;
   left: 332px;
-  top: 51px;
-  font-weight:normal;
+  top: 5px;
+  font-weight: normal;
   color: #444;
 }
 
