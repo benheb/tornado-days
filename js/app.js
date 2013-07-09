@@ -109,73 +109,67 @@ torApp.prototype.scrollControls = function() {
   });
   
   $window = $(window);
-    //$('section[data-type="background"]').each(function(){
-      var $bg = $('#home');
-      var $wbg = $('#intro-map-window .inner.wbg');
-      
-      $(window).scroll(function(e) {
-        
-        //self.update();
-        
-        if ( $('body').hasClass('no-scroll') ) return;
-        
-        var pos = $(window).scrollTop(); //position of the scrollbar
-        if ( !this.prev_pos ) this.prev_pos = pos;
-        
-        //fadeout introduction
-        if ( pos > 10 ) {
-          $('#intro-map').fadeOut();
-          $('#intro-map-window-one').fadeOut();
-          $('#intro-map-window-two').show();
-          $('#scroll-tip-container').hide();
-        } else {
-          $('#intro-map-window-two').hide();
-          $('#intro-map').fadeIn();
-          $('#intro-map-window-one').show();
-          $('#scroll-tip-container').show();
-        }
-        
-        //Scroll to top - bounce the intro tors!
-        if ( pos < 3 && this.prev_pos > 3 ) {
-          self.intro_svg.selectAll(".intro-tors")
-            .transition()
-            .duration(1000)
-            .attr("transform", function(d) {
-              var random = Math.floor((Math.random()*20)+1);
-              var lat = (parseFloat(d.latitude) + random);
-              return "translate(" + self.intro_projection([d.longitude,lat]) + ")";
-            })
-            .transition()
-            .duration(1000)
-            .delay(function( d, i ) { return Math.floor((Math.random()*700)+50); })
-            .ease('bounce') //elastic // bounce
-            .attr("transform", function(d) {
-              return "translate(" + self.intro_projection([d.longitude,d.latitude]) + ")";
-            });
-            
-            $('.about').removeClass('viewed');
-        }
-        
-        this.prev_pos = pos;
-        
-        clearTimeout($.data(this, "scrollTimer"));
-        $.data(this, "scrollTimer", setTimeout(function() {
-            // do something
-           $('.maps').css( {'pointer-events': 'auto' });
-        }, 1200));
-        
-        var yPos = -($window.scrollTop() / $bg.data('speed'));
-        var coords = '50% '+ yPos + 'px';
-        
-        
-        if ( $($bg).hasClass('map_two') ) {
-        } else {
-          $bg.css({ backgroundPosition: coords });
-        }
-        
-      });
-    //});
+    var $bg = $('#home');
+    var $wbg = $('#intro-map-window .inner.wbg');
     
+    $(window).scroll(function(e) {
+      if ( $('body').hasClass('no-scroll') ) return;
+      
+      var pos = $(window).scrollTop(); //position of the scrollbar
+      if ( !this.prev_pos ) this.prev_pos = pos;
+      
+      //fadeout introduction
+      if ( pos > 10 ) {
+        $('#intro-map').fadeOut();
+        $('#intro-map-window-one').fadeOut();
+        $('#intro-map-window-two').show();
+        $('#scroll-tip-container').hide();
+      } else {
+        $('#intro-map-window-two').hide();
+        $('#intro-map').fadeIn();
+        $('#intro-map-window-one').show();
+        $('#scroll-tip-container').show();
+      }
+      
+      //Scroll to top - bounce the intro tors!
+      if ( pos < 3 && this.prev_pos > 3 ) {
+        self.intro_svg.selectAll(".intro-tors")
+          .transition()
+          .duration(1000)
+          .attr("transform", function(d) {
+            var random = Math.floor((Math.random()*20)+1);
+            var lat = (parseFloat(d.latitude) + random);
+            return "translate(" + self.intro_projection([d.longitude,lat]) + ")";
+          })
+          .transition()
+          .duration(1000)
+          .delay(function( d, i ) { return Math.floor((Math.random()*700)+50); })
+          .ease('bounce') //elastic // bounce
+          .attr("transform", function(d) {
+            return "translate(" + self.intro_projection([d.longitude,d.latitude]) + ")";
+          });
+          
+          $('.about').removeClass('viewed');
+      }
+      
+      this.prev_pos = pos;
+      
+      clearTimeout($.data(this, "scrollTimer"));
+      $.data(this, "scrollTimer", setTimeout(function() {
+          // do something
+         $('.maps').css( {'pointer-events': 'auto' });
+      }, 1200));
+      
+      var yPos = -($window.scrollTop() / $bg.data('speed'));
+      var coords = '50% '+ yPos + 'px';
+      
+      
+      if ( $($bg).hasClass('map_two') ) {
+      } else {
+        $bg.css({ backgroundPosition: coords });
+      }
+      
+    });
     
     //Detect when sections appear 
     $('.about').appear();
@@ -205,6 +199,7 @@ torApp.prototype.createMap = function() {
     max = 95,
     m = 0;
   
+  //Map Obj
   this.maps = {
     "map_one" : { 
       "id": "map_one", 
@@ -253,15 +248,18 @@ torApp.prototype.createMap = function() {
 
   this.path = d3.geo.path()
     .projection( this.projection );
-
-  var maps = [ "map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight", ]
+  
+  //Create Map SVGs
+  var maps = [ "map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight" ];
   $.each( this.maps, function( i, map) {
     var id = map.id;
     self[ id ] = d3.select("#"+ id).append("svg");
   });
   
+  //Master Legend
   this.legend = d3.select('#legend').append( "svg" );
   
+  //For sizing of tornado points by Fujita scale
   this.scales = {
      0: 3,
      1: 5,
@@ -277,13 +275,17 @@ torApp.prototype.createMap = function() {
 torApp.prototype.addLand = function () {
   var self = this;
   
-  $.each( this.maps, function(i, map) {
+  d3.json("data/world.json", function(error, world) {
+    console.log('world', world)
+    $.each( self.maps, function(i, map) {
     
-    var path = d3.geo.path().projection( map[ "projection"] );
-    var id = map.id;
+      var path = d3.geo.path().projection( map[ "projection"] );
+      var id = map.id;
     
-    d3.json("data/world.json", function(error, world) {
-      //console.log('world', world)
+      /*
+       * A mess of logic to draw maps differently... 
+       * 
+       */
       if ( id !== 'map_two' && id !== 'map_three' && id !== "map_four" ) {
         self[ id ].insert("path")
           .datum(topojson.feature(world, world.objects.states))
@@ -366,9 +368,9 @@ torApp.prototype.updateLegend = function() {
     .data( legend )
   .enter().insert("circle")
     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";})
-    .attr("fill", "#FEFEFE")
-    .attr('stroke', "rgb(255, 20, 0)")
-    .attr('stroke-width', 0.6)
+    .attr("fill", "rgb(230, 85, 13)")
+    .attr('stroke', "rgb(254, 230, 206)")
+    .attr('stroke-width', 0.8)
     .attr('opacity', 0.8)
     .attr('class', 'legend-dots')
     .attr('r', function(d) { return d.radius });
@@ -391,28 +393,49 @@ torApp.prototype.LoadPoints = function( map ) {
       var cost = 0;
       var count = 0;
       
-      var strongTors = self[ map ].append('g');
-
       $('#tornado-count .count').html(rows.length);
       var projection = self.maps[ map ].projection;
+      
+      var reports = self[ map ].append('g');
+      reports.selectAll("circle")
+        .data(rows)
+      .enter().insert("circle")
+        .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
+        //.attr("fill", "rgb(255, 20, 0)")
+        .attr('fill', "rgb(230, 85, 13)")
+        .attr('stroke', 'rgb(253, 174, 107)')
+        .attr('stroke-width', 2.2)
+        .attr('opacity', 0.8)
+        .attr('class', 'storm-reports')
+        .attr('id', map+'_graphic')
+        //.attr('r', 3);
+        .attr('r', function(d) {
+          var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
+          return size - 2;
+        });
+        
+      
+      var strongTors = self[ map ].append('g');
       
       strongTors.selectAll("circle")
         .data(rows)
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
-        .attr("fill", "#FFFFFF")
-        .attr('stroke', "rgb(255, 20, 0)")
+        .attr("fill", "none")
+        //.attr('stroke', "rgb(255, 20, 0)")
+        //.attr('stroke', "#FF7F50")
         //.attr('stroke', '#00CDCD')
+        .attr('stroke', 'rgb(254, 230, 206)')
         .attr('stroke-width', function(d) {
           if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
                   d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
             return 3
           } else {
-            return 0.7;
+            return 0.9;
           }
         })
         .attr('class', 'storm-reports storm-reports-large')
-        .attr('opacity', 0.7)
+        .attr('opacity', 1)
         .attr('id', map+'_graphic')
         .attr('d', function(d) {
           injured = injured + parseInt( d.injuries );
@@ -447,31 +470,25 @@ torApp.prototype.LoadPoints = function( map ) {
                 return size; 
               })
         });
+        //.attr('d', function(d) {
+          //self.drawLines(d, map)
+        //});
           
       //Stats
       $( '.'+map+' .injured-by-tors .number' ).html( injured );
       $( '.'+map+' .number-of-tors .number' ).html( count );
       
-      var reports = self[ map ].append('g');
-
-      $('#tornado-count .count').html(rows.length);
-      var projection = self.maps[ map ].projection;
-  
-      reports.selectAll("circle")
-        .data(rows)
-      .enter().insert("circle")
-        .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
-        .attr("fill", "rgb(255, 20, 0)")
-        .attr('opacity', 0.6)
-        .attr('class', 'storm-reports')
-        .attr('id', map+'_graphic')
-        .attr('r', 0.5);
       
      });
 }
 
+/*
+ * Draws tornado paths if they exist
+ * 
+ */
 torApp.prototype.drawLines = function( d, map ) {
   var self = this;
+  
   if (d.endLat != "-") {
     var lines = self[ map ].append('g');
     var projection = self.maps[ map ].projection;
@@ -479,9 +496,9 @@ torApp.prototype.drawLines = function( d, map ) {
     lines.selectAll("line")
       .data([d])
     .enter().append('line')
-      .style("stroke", '#FFF')
+      .style("stroke", 'rgb(254, 230, 206)')
+      .style('stroke-width', 1.3)
       .attr('class', 'tornado-paths-'+map)
-      .style('display', 'none')
       .attr("x1", projection([d.longitude,d.latitude])[0])
       .attr("y1", projection([d.longitude,d.latitude])[1])
       .attr("x2", projection([d.longitude,d.latitude])[0])
@@ -498,6 +515,11 @@ torApp.prototype.RemovePoints = function( map ) {
   //$('.storm-reports').remove(); 
 }
 
+
+/*
+ * Map hover and exit 
+ * 
+ */
 torApp.prototype.hover = function( d, map ) {
   app.exit();
   
@@ -553,6 +575,12 @@ torApp.prototype.exit = function() {
   $('#info-window').remove();
 }
 
+
+/*
+ * HTML5 Video Controls
+ * 
+ * 
+ */
 torApp.prototype.playVideo = function( id ) {
   var self = this;
   var val = id.replace(/map_/g, '');

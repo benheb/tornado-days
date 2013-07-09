@@ -122,10 +122,9 @@ torApp.prototype.intro = function() {
           var lat = (parseFloat(d.latitude) + random);
           return "translate(" + projection([d.longitude,lat]) + ")";
         })
-        .attr("fill", "#FFFFFF")
-        //.attr('stroke', "#122133")
-        .attr('stroke', "rgb(255, 20, 0)")
-        .attr('stroke-width', 0.5)
+        .attr("fill", "rgb(230, 85, 13)")
+        .attr('stroke', "rgb(254, 230, 206)")
+        .attr('stroke-width', 0.8)
         .attr('opacity', 0)
         .attr('class', 'intro-tors')
         .attr('r', function(d) { 
