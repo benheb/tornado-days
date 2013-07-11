@@ -113,6 +113,12 @@ body{
   font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
 }
 
+.footer-title {
+  font-size: 15pt;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #444;
+}
+
 .no-scroll {
   position: fixed !important; 
   overflow-y: scroll;

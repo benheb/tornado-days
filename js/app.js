@@ -79,7 +79,7 @@ var torApp = function() {
    * Section SIX
    * 
    */
-  scrollorama.animate('#blurb-six',{ duration: 300, property:'padding-top', start:600,end:0, pin: true });
+  //scrollorama.animate('#blurb-six',{ duration: 300, property:'padding-top', start:600,end:0, pin: true });
   
   /*
    * Footer
@@ -108,6 +108,24 @@ torApp.prototype.scrollControls = function() {
     self.intro_svg.attr('width', w ).attr('height', h + 100);
   });
   
+  //Map Zoom Controls 
+  /*
+  $('.maps').mousewheel(function (event, delta, deltaX, deltaY) {
+    var projection = self.maps[ $(this).attr('id') ].projection;
+    
+    var s = projection.scale();
+    if (delta > 0) {
+      projection.scale(s * 1.1);
+    }
+    else {
+      projection.scale(s * 0.9);
+    }
+    
+    var path = d3.geo.path().projection( projection );
+    d3.selectAll("path").attr("d", path);
+  });
+  */
+ 
   $window = $(window);
     var $bg = $('#home');
     var $wbg = $('#intro-map-window .inner.wbg');
@@ -248,7 +266,7 @@ torApp.prototype.createMap = function() {
 
   this.path = d3.geo.path()
     .projection( this.projection );
-  
+    
   //Create Map SVGs
   var maps = [ "map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight" ];
   $.each( this.maps, function( i, map) {
@@ -377,9 +395,16 @@ torApp.prototype.updateLegend = function() {
   
 }
 
+
+torApp.prototype.zoomed = function( d ) {
+  console.log('zoom', d )
+}
+
 //Points on a map!
 torApp.prototype.LoadPoints = function( map ) {
-  var self = this;
+  var self = this, 
+    h = 1000,
+    w = document.width;
   
   if ( $('#'+map+'_graphic').length ) return;
   
@@ -396,7 +421,9 @@ torApp.prototype.LoadPoints = function( map ) {
       $('#tornado-count .count').html(rows.length);
       var projection = self.maps[ map ].projection;
       
+      
       var reports = self[ map ].append('g');
+      
       reports.selectAll("circle")
         .data(rows)
       .enter().insert("circle")
