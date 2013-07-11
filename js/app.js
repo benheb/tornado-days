@@ -64,7 +64,7 @@ var torApp = function() {
    * Section three
    * 
    */
-  scrollorama.animate('#section-three',{ duration: height, property:'top', start:-height,end:0 });
+  //scrollorama.animate('#section-three',{ duration: height, property:'top', start:-height,end:0 });
   //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
   
   /*
@@ -408,10 +408,38 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr('opacity', 0.8)
         .attr('class', 'storm-reports')
         .attr('id', map+'_graphic')
-        //.attr('r', 3);
         .attr('r', function(d) {
           var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
           return size - 2;
+        })
+        .on('mouseover', function(d) { 
+          window.clearTimeout(self.infoTimeout);
+          
+          d3.select(this)
+            .attr('d', self.hover( d, map ))
+            .transition()
+            .duration(400)
+              .attr('opacity', 0.1)
+              .attr('r', function() { 
+                var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale] + 14;
+                return size - 2; 
+              })
+            .transition()
+            .duration(400)
+              .attr('opacity', 0.8)
+              .attr('r', function() { 
+                var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
+                return size - 2; 
+              });
+              
+        })
+        .on('mouseout', function() {
+          
+          self.infoTimeout = window.setTimeout(function() {
+            $('#info-window').fadeOut();
+            d3.selectAll('.tor-path').remove(); 
+          },1500);
+          
         });
         
       
@@ -422,9 +450,6 @@ torApp.prototype.LoadPoints = function( map ) {
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
         .attr("fill", "none")
-        //.attr('stroke', "rgb(255, 20, 0)")
-        //.attr('stroke', "#FF7F50")
-        //.attr('stroke', '#00CDCD')
         .attr('stroke', 'rgb(254, 230, 206)')
         .attr('stroke-width', function(d) {
           if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
@@ -440,10 +465,6 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr('d', function(d) {
           injured = injured + parseInt( d.injuries );
           
-          //TODO calculate cost
-          var c = parseInt( d.damages.split('-')[ 0 ].replace( /\$/, '') );
-          cost = ( isNaN( c ) ) ? cost : cost + c;
-          
           //number of tors
           count++;
           
@@ -451,28 +472,7 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr('r', function(d) {
           var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
           return size;
-        })
-        .on('mouseover', function(d) { 
-          d3.select(this)
-            .attr('d', self.hover( d, map ))
-            .transition()
-            .duration(400)
-              .attr('opacity', 0.1)
-              .attr('r', function() { 
-                var size = ( d.scale == undefined ) ? 1 : self.scales[d.scale] + 14;
-                return size; 
-              })
-            .transition()
-            .duration(400)
-              .attr('opacity', 0.7)
-              .attr('r', function() { 
-                var size = ( d.scale == undefined ) ? 1 : self.scales[d.scale];
-                return size; 
-              })
         });
-        //.attr('d', function(d) {
-          //self.drawLines(d, map)
-        //});
           
       //Stats
       $( '.'+map+' .injured-by-tors .number' ).html( injured );
@@ -489,6 +489,8 @@ torApp.prototype.LoadPoints = function( map ) {
 torApp.prototype.drawLines = function( d, map ) {
   var self = this;
   
+  d3.selectAll('.tor-path').remove();
+  
   if (d.endLat != "-") {
     var lines = self[ map ].append('g');
     var projection = self.maps[ map ].projection;
@@ -498,7 +500,7 @@ torApp.prototype.drawLines = function( d, map ) {
     .enter().append('line')
       .style("stroke", 'rgb(254, 230, 206)')
       .style('stroke-width', 1.3)
-      .attr('class', 'tornado-paths-'+map)
+      .attr('class', 'tor-path tornado-paths-'+map)
       .attr("x1", projection([d.longitude,d.latitude])[0])
       .attr("y1", projection([d.longitude,d.latitude])[1])
       .attr("x2", projection([d.longitude,d.latitude])[0])
@@ -521,22 +523,11 @@ torApp.prototype.RemovePoints = function( map ) {
  * 
  */
 torApp.prototype.hover = function( d, map ) {
-  app.exit();
+  this.exit();
+  this.drawLines(d, map);
   
-  var x2 = this.maps[ map ].projection([d.longitude,d.latitude])[0] + Math.floor(Math.random()*20) + 60;
-  var y2 = this.maps[ map ].projection([d.longitude,d.latitude])[1] + Math.floor(Math.random()*60) + 10;
-  
-  var line = app[ map ].append("svg:line")
-    .attr('class', 'tip-line')
-    .style("stroke", '#FFF')
-    .attr("x1", this.maps[ map ].projection([d.longitude,d.latitude])[0])
-    .attr("y1", this.maps[ map ].projection([d.longitude,d.latitude])[1])
-    .attr("x2", this.maps[ map ].projection([d.longitude,d.latitude])[0])
-    .attr("y2", this.maps[ map ].projection([d.longitude,d.latitude])[1])
-    .transition()
-      .duration(900)
-      .attr("x2", x2)
-      .attr("y2", y2);
+  var x2 = this.maps[ map ].projection([d.longitude,d.latitude])[0] - 84;
+  var y2 = this.maps[ map ].projection([d.longitude,d.latitude])[1] - 145;
     
   var info = '<div id="info-window"></div>';
   $('#'+map).append( info );
