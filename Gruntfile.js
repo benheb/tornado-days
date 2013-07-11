@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     imagemin: {                          // Task
       dist: {                            // Target
         options: {                       // Target options
-          //optimizationLevel: 3
+          optimizationLevel: 3,
           progressive: true
         },
         files: {                         // Dictionary of files
