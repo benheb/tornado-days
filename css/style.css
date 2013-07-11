@@ -4,6 +4,10 @@ body{
   font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
 }
 
+::-webkit-scrollbar { 
+  display: none; 
+}
+
 #header {
   background: none;
   height: 48px;

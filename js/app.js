@@ -72,7 +72,7 @@ var torApp = function() {
    * Section four
    * 
    */
-  //scrollorama.animate('#video-four',{ duration: 500, property:'volume', start:0,end:0.9 });
+  //scrollorama.animate('#section-four',{ duration: height, property:'top', start:0,end:0 });
   
   
   /*
