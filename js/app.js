@@ -42,8 +42,8 @@ var torApp = function() {
   this.updateLegend();
   
   var scrollorama = $.scrollorama({
-    blocks:'.scrollblock',
-    enablePin:false
+    blocks:'.scrollblock'
+    //enablePin:false
   });
   
   var height = $(window).height();
@@ -72,14 +72,14 @@ var torApp = function() {
    * Section four
    * 
    */
-  //scrollorama.animate('#section-four',{ duration: height, property:'top', start:0,end:0 });
+  scrollorama.animate('#section-four',{ duration: height, property:'top', start:0,end:0 });
   
   
   /*
    * Section SIX
    * 
    */
-  scrollorama.animate('#blurb-six',{ duration: 300, property:'right', delay:420, start:width,end:0 });
+  scrollorama.animate('#blurb-six',{ duration: 300, property:'padding-top', start:600,end:0, pin: true });
   
   /*
    * Footer

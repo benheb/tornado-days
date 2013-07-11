@@ -90,7 +90,27 @@ body{
 }
 
 #footer-inner {
-  
+  width:900px;
+  margin:auto;
+  overflow:hidden;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
+}
+
+#footer #video-attr {
+  width: 300px;
+  overflow: hidden;
+  height: 160px;
+  float:left;
+  margin-right:15px;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
+}
+
+#footer #image-attr {
+  width: 300px;
+  float:left;
+  overflow: hidden;
+  height: 160px;
+  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
 }
 
 .no-scroll {
@@ -291,6 +311,11 @@ path {
   position: relative; 
   overflow:hidden;
   z-index:200;
+}
+
+#scrollblock-one {
+  position:relative !important;
+  
 }
 
 .about.map_two {
