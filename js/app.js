@@ -108,24 +108,6 @@ torApp.prototype.scrollControls = function() {
     self.intro_svg.attr('width', w ).attr('height', h + 100);
   });
   
-  //Map Zoom Controls 
-  /*
-  $('.maps').mousewheel(function (event, delta, deltaX, deltaY) {
-    var projection = self.maps[ $(this).attr('id') ].projection;
-    
-    var s = projection.scale();
-    if (delta > 0) {
-      projection.scale(s * 1.1);
-    }
-    else {
-      projection.scale(s * 0.9);
-    }
-    
-    var path = d3.geo.path().projection( projection );
-    d3.selectAll("path").attr("d", path);
-  });
-  */
- 
   $window = $(window);
     var $bg = $('#home');
     var $wbg = $('#intro-map-window .inner.wbg');
@@ -208,6 +190,11 @@ torApp.prototype.scrollControls = function() {
       self.stopVideo( id );
     });
 }
+
+/*
+ * Setup all the maps
+ * 
+ */
 
 torApp.prototype.createMap = function() {
   var self = this,
@@ -293,10 +280,11 @@ torApp.prototype.createMap = function() {
 torApp.prototype.addLand = function () {
   var self = this;
   
-  d3.json("data/world.json", function(error, world) {
+  d3.json("data/usa-detail.json", function(error, world) {
     console.log('world', world)
     $.each( self.maps, function(i, map) {
-    
+      
+      var projection = map[ "projection"];
       var path = d3.geo.path().projection( map[ "projection"] );
       var id = map.id;
     
@@ -304,27 +292,38 @@ torApp.prototype.addLand = function () {
        * A mess of logic to draw maps differently... 
        * 
        */
+     
       if ( id !== 'map_two' && id !== 'map_three' && id !== "map_four" ) {
+        self[ id ].append("g")
+          .attr("class", "states")
+          .selectAll("path")
+            .data(topojson.feature(world, world.objects[ "usa-states" ]).features)
+          .enter().append("path")
+            .attr('class', 'states')
+            .attr('id', map+'_states')
+            .attr("d", function( d ) {
+              self.addLabel( d, id );
+            })
+            .attr("d", path);
+            
+            
         self[ id ].insert("path")
-          .datum(topojson.feature(world, world.objects.states))
-          .attr('class', 'states')
-          .attr('id', map+'_states')
-          .attr("d", path);
-        
-        self[ id ].insert("path")
-          .datum(topojson.feature(world, world.objects.water))
+          .datum(topojson.feature(world, world.objects.ne_50m_lakes))
           .attr('class', 'lakes')
           .attr("d", path);
-          
+      
       } else if ( id === "map_two" ) {
         self[ id ].append("g")
           .attr("class", "states")
         .selectAll("path")
-          .data(topojson.feature(world, world.objects.states).features)
+          .data(topojson.feature(world, world.objects[ "usa-states" ]).features)
         .enter().append("path")
           .attr('id', function(d) { return d.id })
           .attr("class", function(d) {
-            if ( d.id === 5 || d.id === 1 || d.id === 17 || d.id === 18 || d.id === 21 || d.id === 22 || d.id === 29 || d.id === 28 || d.id === 47 || d.id === 48 ) {
+            if ( d.properties.NAME === "Texas" || d.properties.NAME === "Kentucky" || d.properties.NAME === "Louisiana" || d.properties.NAME === "Arkansas"
+              || d.properties.NAME === "Tennessee" || d.properties.NAME === "Alabama" || d.properties.NAME === "Mississippi" || d.properties.NAME === "Missouri" || d.properties.NAME === "Indiana" 
+              || d.properties.NAME === "Illinois") {
+              self.addLabel( d, id );
               return "states-partial";
             } else {
               return "states-hidden";
@@ -335,11 +334,14 @@ torApp.prototype.addLand = function () {
         self[ id ].append("g")
           .attr("class", "states")
         .selectAll("path")
-          .data(topojson.feature(world, world.objects.states).features)
+          .data(topojson.feature(world, world.objects[ "usa-states" ]).features)
         .enter().append("path")
           .attr('id', function(d) { return d.id })
           .attr("class", function(d) {
-            if ( d.id === 27 || d.id === 55 || d.id === 48 || d.id === 18 || d.id === 17 || d.id === 19 || d.id === 5 || d.id === 29 || d.id === 26 || d.id === 20 || d.id === 40 ) {
+            if ( d.properties.NAME  === "Oklahoma" || d.properties.NAME === "Kansas" || d.properties.NAME === "Iowa"
+              || d.properties.NAME === "Wisconsin" || d.properties.NAME === "Minnesota" || d.properties.NAME === "Missouri" || d.properties.NAME === "Indiana" 
+              || d.properties.NAME === "Illinois") {
+              self.addLabel( d, id );
               return "states-partial";
             } else {
               return "states-hidden";
@@ -350,26 +352,61 @@ torApp.prototype.addLand = function () {
         self[ id ].append("g")
           .attr("class", "states")
         .selectAll("path")
-          .data(topojson.feature(world, world.objects.states).features)
+          .data(topojson.feature(world, world.objects[ "usa-states" ]).features)
         .enter().append("path")
           .attr('id', function(d) { return d.id })
           .attr("class", function(d) {
             //31 21 40
-            if ( d.id === 31 || d.id === 20 || d.id === 40) {
+            if ( d.properties.NAME === "Texas" || d.properties.NAME  === "Oklahoma" || d.properties.NAME === "Kansas" || d.properties.NAME === "Nebraska" ) {
+              self.addLabel( d, id );
               return "states-partial";
             } else {
               return "states-faded";
             }
           })
           .attr("d", path);
+          
+       
       }
+    
+      
     });
+    
      
   });
   
 }
 
-//Sets initial legend DOT positions
+
+
+/*
+ * Adds state label to visible states 
+ * 
+ */
+torApp.prototype.addLabel = function( d, id ) {
+  
+  var projection = this.maps[ id ][ "projection"];
+  var path = d3.geo.path().projection( this.maps[ id ][ "projection"] );
+  
+  this[ id ].append("text")
+    .attr("class", "subunit-label")
+    .attr("transform", function() {
+      return "translate(" + path.centroid(d) + ")"; 
+    })
+    .attr("dy", ".35em")
+    .text(function() { return d.properties.NAME; });
+    
+  this[ id ].selectAll(".place-label")
+    .attr("x", function(d) { return d.geometry.coordinates[0] > -1 ? 6 : -6; })
+    .style("text-anchor", function(d) { return d.geometry.coordinates[0] > -1 ? "start" : "end"; });
+}
+
+
+
+/*
+ * Sets legend in app header
+ * 
+ */
 torApp.prototype.updateLegend = function() {
   var self = this;
   var dots = this.legend.append('g');
@@ -396,11 +433,11 @@ torApp.prototype.updateLegend = function() {
 }
 
 
-torApp.prototype.zoomed = function( d ) {
-  console.log('zoom', d )
-}
 
-//Points on a map!
+/*
+ *  Add tornadoes to map - requires map ID 
+ * 
+ */
 torApp.prototype.LoadPoints = function( map ) {
   var self = this, 
     h = 1000,
@@ -428,13 +465,23 @@ torApp.prototype.LoadPoints = function( map ) {
         .data(rows)
       .enter().insert("circle")
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
-        //.attr("fill", "rgb(255, 20, 0)")
         .attr('fill', "rgb(230, 85, 13)")
-        .attr('stroke', 'rgb(253, 174, 107)')
-        .attr('stroke-width', 2.2)
+        .attr('stroke', 'rgb(254, 230, 206)')
+        .attr('stroke-width', function(d) {
+          if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
+                  d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
+            return 3
+          } else {
+            return 0.9;
+          }
+        })
         .attr('opacity', 0.8)
         .attr('class', 'storm-reports')
         .attr('id', map+'_graphic')
+        .attr('d', function(d) {
+          injured = injured + parseInt( d.injuries );
+          count++;
+        })
         .attr('r', function(d) {
           var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
           return size - 2;
@@ -469,45 +516,13 @@ torApp.prototype.LoadPoints = function( map ) {
           
         });
         
-      
-      var strongTors = self[ map ].append('g');
-      
-      strongTors.selectAll("circle")
-        .data(rows)
-      .enter().insert("circle")
-        .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
-        .attr("fill", "none")
-        .attr('stroke', 'rgb(254, 230, 206)')
-        .attr('stroke-width', function(d) {
-          if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
-                  d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
-            return 3
-          } else {
-            return 0.9;
-          }
-        })
-        .attr('class', 'storm-reports storm-reports-large')
-        .attr('opacity', 1)
-        .attr('id', map+'_graphic')
-        .attr('d', function(d) {
-          injured = injured + parseInt( d.injuries );
-          
-          //number of tors
-          count++;
-          
-        })
-        .attr('r', function(d) {
-          var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
-          return size;
-        });
-          
-      //Stats
-      $( '.'+map+' .injured-by-tors .number' ).html( injured );
-      $( '.'+map+' .number-of-tors .number' ).html( count );
-      
-      
-     });
+        //Stats
+        $( '.'+map+' .injured-by-tors .number' ).html( injured );
+        $( '.'+map+' .number-of-tors .number' ).html( count );
+      });
 }
+
+
 
 /*
  * Draws tornado paths if they exist
@@ -539,6 +554,7 @@ torApp.prototype.drawLines = function( d, map ) {
         
   }    
 }
+
 
 torApp.prototype.RemovePoints = function( map ) {
   //$('.storm-reports').remove(); 
