@@ -42,8 +42,8 @@ var torApp = function() {
   this.updateLegend();
   
   var scrollorama = $.scrollorama({
-    blocks:'.scrollblock'
-    //enablePin:false
+    blocks:'.scrollblock',
+    enablePin:false
   });
   
   var height = $(window).height();
