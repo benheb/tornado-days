@@ -82,6 +82,13 @@ var torApp = function() {
   //scrollorama.animate('#blurb-six',{ duration: 300, property:'padding-top', start:600,end:0, pin: true });
   
   /*
+   * 
+   * Section SEVEN
+   * 
+   */
+  scrollorama.animate('#seven-info',{ delay: 220, duration: 430, property:'line-height', start:0,end:3 });
+  
+  /*
    * Footer
    * 
    */

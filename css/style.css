@@ -508,7 +508,7 @@ path {
 }
 
 #blurb-seven {
-  background: url(../images/blurb-tor.png) right fixed !important;
+  background: url(../images/2011-tor.jpg) right fixed !important;
 }
 
 #blurb-eight {
@@ -571,6 +571,19 @@ path {
   top: 5px;
   font-weight: normal;
   color: #444;
+}
+
+
+#blurb-seven .info {
+  width: 320px;
+  position: absolute;
+  font-weight: normal;
+  color: #FEFEFE;
+  line-height: 1px;
+}
+
+#blurb-seven {
+  opacity:0.9;
 }
 
 #blurb-five .info {

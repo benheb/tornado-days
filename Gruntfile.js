@@ -24,7 +24,8 @@ module.exports = function(grunt) {
           'images/down-arrow.png': 'dev/images/down-arrow.png',
           'images/1999-okc.jpg': 'dev/images/1999-okc.jpg',
           'images/1992-1.jpg': 'dev/images/1992-1.jpg',
-          'images/joplin.png': 'dev/images/joplin.png'
+          'images/joplin.png': 'dev/images/joplin.png',
+          'images/2011-tor.jpg': 'dev/images/2011-tor2.jpg'
         }
       }
     }
