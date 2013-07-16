@@ -13,7 +13,7 @@ $(document).ready(function(){
   var height = $(window).height() + 20;
   
   //setup UI
-  $('.maps').css( { 'width': $(window).width()+'px', 'height': height+40+'px'});
+  $('.maps').css( { 'width': $(window).width()+'px', 'height': height+100+'px'});
   $('.about').css('height', height+40+'px');
   $('.map-blurb').css('height', height+ 40 + 'px');
   $('#home').css('height', height+'px');
@@ -233,46 +233,48 @@ torApp.prototype.createMap = function() {
     max = 95,
     m = 0;
   
+  var scale = w / 4;
+  console.log('scale', w)
   //Map Obj
   this.maps = {
     "map_one" : { 
       "id": "map_one", 
-      "projection" : d3.geo.albers().scale(1700).center([17, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale( w * 1.4 ).center([17, 33]).clipAngle(90).translate([w / 2, h / 2]), 
       "dataset" : 'data/may-24-26-2011.csv' 
     },
     "map_two" : {
       "id": "map_two", 
-      "projection" : d3.geo.mercator().scale(2500).center([-95, 33]).translate([w / 2, h / 2]).precision(.1),
+      "projection" : d3.geo.mercator().scale( w * 2.1 ).center([-95, 33]).translate([w / 2, h / 2]).precision(.1),
       "dataset" : 'data/feb-5-6-2008.csv'
     },
     "map_three" : {
       "id": "map_three", 
-      "projection" : d3.geo.mercator().scale(2500).center([-90, 39]).translate([w / 2, h / 2]).precision(.1),
+      "projection" : d3.geo.mercator().scale( w * 2.1 ).center([-90, 37]).translate([w / 2, h / 2]).precision(.1),
       "dataset" : 'data/may-22-2011.csv'
     },
     "map_four" : {
       "id": "map_four", 
-      "projection" : d3.geo.albers().scale(3500).center([6, 36]).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale( w * 2.9 ).center([6, 34]).translate([w / 2, h / 2]), 
       "dataset" : 'data/may-3-1999.csv' 
     },
     "map_five" : {  
       "id": "map_five", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale( w * 1.4 ).center([20, 33]).translate([w / 2, h / 2]), 
       "dataset" : 'data/nov-21-23-1992.csv'
     } ,
     "map_six" : { 
       "id": "map_six", 
-      "projection" : d3.geo.orthographic().scale(1700).translate([w / 2, h / 2]).clipAngle(90).rotate([96, -33]).precision(.1), 
+      "projection" : d3.geo.orthographic().scale( w * 1.4 ).translate([w / 2, h / 2]).clipAngle(90).rotate([96, -33]).precision(.1), 
       "dataset" : 'data/apr-11-12-1965.csv'
     },
     "map_seven" : { 
       "id": "map_seven", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.albers().scale( w * 1.4 ).center([20, 31]).translate([w / 2, h / 2]), 
       "dataset" : "data/apr-3-4-1974.csv"   
     },
     "map_eight" : { 
       "id": "map_eight", 
-      "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]),
+      "projection" : d3.geo.albers().scale( w * 1.4 ).center([20, 31]).translate([w / 2, h / 2]),
       "dataset" : "data/apr-26-27-28-2011.csv"
     }
       
