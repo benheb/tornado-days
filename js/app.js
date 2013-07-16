@@ -86,7 +86,7 @@ var torApp = function() {
    * Section SEVEN
    * 
    */
-  scrollorama.animate('#seven-info',{ delay: 220, duration: 430, property:'line-height', start:0,end:3 });
+  scrollorama.animate('#seven-info',{ delay: 250, duration: 500, property:'line-height', start:0,end:3 });
   
   /*
    * Footer
@@ -157,6 +157,7 @@ torApp.prototype.scrollControls = function() {
           });
           
           $('.about').removeClass('viewed');
+          self.RemovePoints();
       }
       
       this.prev_pos = pos;
@@ -193,13 +194,14 @@ torApp.prototype.scrollControls = function() {
     $('.about').on('disappear', function() {
       $(this).removeClass('viewed');
       var id = $(this).attr('id');
-      self.RemovePoints( id );
       self.stopVideo( id );
     });
 }
 
 /*
  * Setup all the maps
+ *    Define map properties ( projections, scale, dataset )
+ *    Append SVG for each map to related element
  * 
  */
 
@@ -283,7 +285,13 @@ torApp.prototype.createMap = function() {
   
 }
 
-//world / state / water boundaries --- add them to map!
+/*
+ * 
+ * Add state boundaries for each map
+ *    Set unique styling by map id
+ * 
+ * 
+ */
 torApp.prototype.addLand = function () {
   var self = this;
   
@@ -372,16 +380,9 @@ torApp.prototype.addLand = function () {
             }
           })
           .attr("d", path);
-          
-       
       }
-    
-      
     });
-    
-     
   });
-  
 }
 
 
@@ -474,25 +475,10 @@ torApp.prototype.LoadPoints = function( map ) {
         .attr("transform", function(d) { return "translate(" + projection([d.longitude,d.latitude]) + ")";})
         .attr('fill', "rgb(230, 85, 13)")
         .attr('stroke', 'rgb(254, 230, 206)')
-        .attr('stroke-width', function(d) {
-          if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
-                  d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
-            return 3
-          } else {
-            return 0.9;
-          }
-        })
-        .attr('opacity', 0.8)
+        .attr('radius', 0)
+        .attr('opacity', 0)
         .attr('class', 'storm-reports')
         .attr('id', map+'_graphic')
-        .attr('d', function(d) {
-          injured = injured + parseInt( d.injuries );
-          count++;
-        })
-        .attr('r', function(d) {
-          var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
-          return size - 2;
-        })
         .on('mouseover', function(d) { 
           window.clearTimeout(self.infoTimeout);
           
@@ -521,7 +507,27 @@ torApp.prototype.LoadPoints = function( map ) {
             d3.selectAll('.tor-path').remove(); 
           },1500);
           
-        });
+        })
+        .transition()
+        .delay(function( d, i ) { return Math.floor((Math.random()*2800)); })
+        .duration(1100)
+          .attr('stroke-width', function(d) {
+            if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
+                    d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
+              return 3
+            } else {
+              return 0.9;
+            }
+          })
+          .attr('opacity', 0.8)
+          .attr('d', function(d) {
+            injured = injured + parseInt( d.injuries );
+            count++;
+          })
+          .attr('r', function(d) {
+            var size = ( d.scale == undefined ) ? 0 : self.scales[d.scale];
+            return size - 2;
+          });
         
         //Stats
         $( '.'+map+' .injured-by-tors .number' ).html( injured );
@@ -564,7 +570,7 @@ torApp.prototype.drawLines = function( d, map ) {
 
 
 torApp.prototype.RemovePoints = function( map ) {
-  //$('.storm-reports').remove(); 
+  $('.storm-reports').remove(); 
 }
 
 
