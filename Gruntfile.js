@@ -29,7 +29,9 @@ module.exports = function(grunt) {
           'images/1974-1.jpg': 'dev/images/1974-1.jpg',
           'images/1974-2.jpg': 'dev/images/1974-2.jpg',
           'images/1974-3.gif': 'dev/images/1974-3.gif',
-          'images/1974-4.jpg': 'dev/images/1974-4.jpg'
+          'images/1974-4.jpg': 'dev/images/1974-4.jpg',
+          'images/1974-5.jpg': 'dev/images/1974-5.jpg',
+          'images/1974-6.jpg': 'dev/images/1974-6.jpg'
         }
       }
     }

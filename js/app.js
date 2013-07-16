@@ -98,6 +98,9 @@ var torApp = function() {
   scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'top', start:-800,end:390 });
   scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'left', start:400,end:153 });
   
+  scrollorama.animate('#seven-image-6',{ delay: 350, duration: 500, property:'top', start:-800,end:526 });
+  scrollorama.animate('#seven-image-6',{ delay: 350, duration: 500, property:'left', start:400,end:-20 });
+  
   /*
    * 
    * Section EIGHT
@@ -526,8 +529,8 @@ torApp.prototype.LoadPoints = function( map ) {
           
         })
         .transition()
-        .delay(function( d, i ) { return Math.floor((Math.random()*1000)); })
-        .duration(1100)
+        .delay(function( d, i ) { return Math.floor((Math.random()*1200)); })
+        .duration(1000)
           .attr('stroke-width', function(d) {
             if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
                     d.county === "Grady" && parseFloat(d.scale) === 5 ) ) {
