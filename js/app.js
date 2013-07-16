@@ -26,7 +26,7 @@ $(document).ready(function(){
     });
   });
   
-  $('#header').on('mouseout', function() {
+  $('.scrollblock').on('mouseover', function() {
     $('#credit').hide();
     $('#header-inner').slideUp('fast');
   });
@@ -79,24 +79,24 @@ var torApp = function() {
    * Section SIX
    * 
    */
-  //scrollorama.animate('#blurb-six',{ duration: 300, property:'padding-top', start:600,end:0, pin: true });
+  scrollorama.animate('#blurb-six',{ delay: 100, duration: 550, property:'opacity', start:0,end:0.8 });
   
   /*
    * 
    * Section SEVEN
    * 
    */
-  scrollorama.animate('#seven-image-1',{ delay: 100, duration: 500, property:'top', start:-height,end:190 });
-  scrollorama.animate('#seven-image-1',{ delay: 100, duration: 500, property:'left', start:width,end:-50 });
+  scrollorama.animate('#seven-image-1',{ delay: 100, duration: 600, property:'top', start:-height,end:190 });
+  scrollorama.animate('#seven-image-1',{ delay: 100, duration: 600, property:'left', start:width,end:-50 });
   
-  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'top', start:-500,end:200 });
-  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'left', start:-1000,end:120 });
+  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 700, property:'top', start:-500,end:200 });
+  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 600, property:'left', start:-1200,end:120 });
   
-  scrollorama.animate('#seven-image-3',{ delay: 150, duration: 500, property:'top', start:height,end:325 });
-  scrollorama.animate('#seven-image-3',{ delay: 150, duration: 500, property:'left', start:-930,end:-135 });
+  scrollorama.animate('#seven-image-3',{ delay: 150, duration: 600, property:'top', start:height,end:325 });
+  scrollorama.animate('#seven-image-3',{ delay: 150, duration: 600, property:'left', start:-930,end:-135 });
   
-  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'top', start:-1000,end:390 });
-  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'left', start:400,end:153 });
+  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 600, property:'top', start:-1000,end:390 });
+  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 600, property:'left', start:400,end:153 });
   
   scrollorama.animate('#seven-image-6',{ delay: 250, duration: 500, property:'top', start:-900,end:526 });
   scrollorama.animate('#seven-image-6',{ delay: 250, duration: 500, property:'left', start:400,end:-20 });
@@ -262,7 +262,7 @@ torApp.prototype.createMap = function() {
     } ,
     "map_six" : { 
       "id": "map_six", 
-      "projection" : d3.geo.albers().scale(2100).center([5, 33]).clipAngle(90).translate([w / 2, h / 2]), 
+      "projection" : d3.geo.orthographic().scale(1700).translate([w / 2, h / 2]).clipAngle(90).rotate([96, -33]).precision(.1), 
       "dataset" : 'data/apr-11-12-1965.csv'
     },
     "map_seven" : { 

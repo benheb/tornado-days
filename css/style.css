@@ -4,6 +4,10 @@ body{
   font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
 }
 
+a:hover {
+  color: #607890 !important;
+}
+
 ::-webkit-scrollbar { 
   display: none; 
 }
@@ -26,6 +30,13 @@ body{
   padding-top: 7px;
 }
 
+#header-wrapper {
+  width:980px;
+  overflow:hidden;
+  margin:auto;
+  position:relative;
+}
+
 #legend-outer {
   width: 335px;
   margin: auto;
@@ -33,7 +44,7 @@ body{
 }
 #path-legend {
   position: absolute;
-  left: -350px;
+  left: -317px;
   top: 5px;
   font-size: 17pt;
   color: #FFF;
@@ -74,11 +85,11 @@ body{
   right: 10px;
   top: 5px;
   width: 255px;
-  border-left: 1px solid #FEFEFE;
   color: #FEFEFE;
   padding-left: 13px;
   font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
-  height: 45px;
+  height: 30px;
+  pointer-events: auto;
 }
 
 #footer {
@@ -472,8 +483,6 @@ path {
 
 #blurb-four {
   width: 650px;
-  background: #FEFEFE;
-  opacity:1;
 }
 
 #blurb-four .map-blurb-text {
@@ -483,7 +492,7 @@ path {
 
 #blurb-six .map-blurb-text {
   width: 321px;
-  margin-left: 15px;
+  margin-left: 0px;
   margin-top: 10px;
 }
 
@@ -498,13 +507,14 @@ path {
 }
 
 #blurb-six {
-  background: #FEFEFE;
-  width: 100%;
-  height: 280px !important;
-  top: 50%;
+  box-shadow: 44px 1px 115px 117px rgb(211, 211, 211);
+  background: rgb(209, 209, 209);
+  width: 203px;
+  top: 20px;
   opacity: 0.8;
-  right: 0px;
-  padding: 0px; 
+  left: 95px;
+  padding: 0px;
+  overflow: visible;
 }
 
 .content-container {
@@ -557,12 +567,12 @@ path {
 }
 
 #blurb-six .info {
-  width: 700px;
+  width: 300px;
   position: absolute;
-  left: 347px;
-  top: 5px;
+  left: 10px;
+  top: 200px;
   font-weight: normal;
-  color: #444;
+  color: #000;
 }
 
 #blurb-seven {
