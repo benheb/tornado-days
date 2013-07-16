@@ -15,7 +15,7 @@ $(document).ready(function(){
   //setup UI
   $('.maps').css( { 'width': $(window).width()+'px', 'height': height+40+'px'});
   $('.about').css('height', height+40+'px');
-  $('.map-blurb').css('height', height - 40 + 'px');
+  $('.map-blurb').css('height', height+ 40 + 'px');
   $('#home').css('height', height+'px');
   $('#intro-map').css( { 'width': $(window).width()+'px', 'height': $(window).height() + 100+'px' } );
   
@@ -86,7 +86,24 @@ var torApp = function() {
    * Section SEVEN
    * 
    */
-  scrollorama.animate('#seven-info',{ delay: 250, duration: 500, property:'line-height', start:0,end:3 });
+  scrollorama.animate('#seven-image-1',{ delay: 100, duration: 500, property:'top', start:-height,end:190 });
+  scrollorama.animate('#seven-image-1',{ delay: 100, duration: 500, property:'left', start:width,end:-50 });
+  
+  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'top', start:-500,end:200 });
+  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'left', start:-800,end:120 });
+  
+  scrollorama.animate('#seven-image-3',{ delay: 150, duration: 500, property:'top', start:height,end:325 });
+  scrollorama.animate('#seven-image-3',{ delay: 150, duration: 500, property:'left', start:-930,end:-135 });
+  
+  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'top', start:-800,end:390 });
+  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'left', start:400,end:153 });
+  
+  /*
+   * 
+   * Section EIGHT
+   * 
+   */
+  scrollorama.animate('#eight-info',{ delay: 250, duration: 500, property:'line-height', start:0,end:2.7 });
   
   /*
    * Footer
@@ -109,7 +126,7 @@ torApp.prototype.scrollControls = function() {
     var h = $(window).height();
     var w = $(window).width();
     
-    $('.about').css('height', h + 50 +'px');
+    $('.about').css('height', h + 100 +'px');
     $('#home').css('height', h+'px');
     $('#intro-map').css( { 'width': w+'px', 'height': h + 100+'px' } );
     self.intro_svg.attr('width', w ).attr('height', h + 100);
@@ -248,12 +265,12 @@ torApp.prototype.createMap = function() {
     "map_seven" : { 
       "id": "map_seven", 
       "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]), 
-      "dataset" : "data/apr-26-27-28-2011.csv"   
+      "dataset" : "data/apr-3-4-1974.csv"   
     },
     "map_eight" : { 
       "id": "map_eight", 
       "projection" : d3.geo.albers().scale(1700).center([20, 33]).clipAngle(90).translate([w / 2, h / 2]),
-      "dataset" : "data/apr-3-4-1974.csv"
+      "dataset" : "data/apr-26-27-28-2011.csv"
     }
       
   }
