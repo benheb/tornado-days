@@ -90,16 +90,16 @@ var torApp = function() {
   scrollorama.animate('#seven-image-1',{ delay: 100, duration: 500, property:'left', start:width,end:-50 });
   
   scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'top', start:-500,end:200 });
-  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'left', start:-800,end:120 });
+  scrollorama.animate('#seven-image-2',{ delay: 100, duration: 500, property:'left', start:-1000,end:120 });
   
   scrollorama.animate('#seven-image-3',{ delay: 150, duration: 500, property:'top', start:height,end:325 });
   scrollorama.animate('#seven-image-3',{ delay: 150, duration: 500, property:'left', start:-930,end:-135 });
   
-  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'top', start:-800,end:390 });
+  scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'top', start:-1000,end:390 });
   scrollorama.animate('#seven-image-4',{ delay: 150, duration: 500, property:'left', start:400,end:153 });
   
-  scrollorama.animate('#seven-image-6',{ delay: 350, duration: 500, property:'top', start:-800,end:526 });
-  scrollorama.animate('#seven-image-6',{ delay: 350, duration: 500, property:'left', start:400,end:-20 });
+  scrollorama.animate('#seven-image-6',{ delay: 250, duration: 500, property:'top', start:-900,end:526 });
+  scrollorama.animate('#seven-image-6',{ delay: 250, duration: 500, property:'left', start:400,end:-20 });
   
   /*
    * 
