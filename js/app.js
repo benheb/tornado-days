@@ -509,7 +509,7 @@ torApp.prototype.LoadPoints = function( map ) {
           
         })
         .transition()
-        .delay(function( d, i ) { return Math.floor((Math.random()*2800)); })
+        .delay(function( d, i ) { return Math.floor((Math.random()*1000)); })
         .duration(1100)
           .attr('stroke-width', function(d) {
             if ( ( d.county === "Newton" && parseFloat(d.scale) === 5 ) || ( 
