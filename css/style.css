@@ -98,6 +98,9 @@ a:hover {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSI+CjxyZWN0IHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzI4MjgyOCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzIiBjeT0iNC4zIiByPSIxLjgiIGZpbGw9IiMzOTM5MzkiPjwvY2lyY2xlPgo8Y2lyY2xlIGN4PSIzIiBjeT0iMyIgcj0iMS44IiBmaWxsPSJibGFjayI+PC9jaXJjbGU+CjxjaXJjbGUgY3g9IjEwLjUiIGN5PSIxMi41IiByPSIxLjgiIGZpbGw9IiMzOTM5MzkiPjwvY2lyY2xlPgo8Y2lyY2xlIGN4PSIxMC41IiBjeT0iMTEuMyIgcj0iMS44IiBmaWxsPSJibGFjayI+PC9jaXJjbGU+Cjwvc3ZnPg==");
   color:#FEFEFE;
   padding:10px;
+  position:absolute;
+  bottom:0px;
+  width:100%;
 }
 
 #footer-inner {
@@ -749,4 +752,57 @@ path {
 
 #joplin-image {
   width:320px;
+}
+
+#outro {
+  padding-top:10px;
+  height:650px;
+  width:100%;
+  background: url(../images/intro-tornado.jpg) no-repeat center center fixed;
+}
+#outro-inner {
+  width:990px;
+  margin:auto;
+  overflow:hidden;
+}
+
+#outro h3 {
+  font-family: "Georgia", serif;
+  font-size: 14pt;
+  margin: 5px;
+  margin-left: 0px;
+  color: rgb(8, 10, 14);
+  text-shadow: 1px 1px rgb(90, 104, 116);
+  text-align: center;
+  display: block;
+  margin-top: 235px;
+}
+
+#outro h2 {
+  font-family: "Georgia", serif;
+  font-size: 27pt;
+  margin: 5px;
+  margin-left: 0px;
+  color: rgb(8, 10, 14);
+  text-shadow: 1px 1px rgb(90, 104, 116);
+}
+
+#outro h1 {
+  font-family: "Georgia", serif;
+  font-size: 55pt;
+  color: rgb(8, 10, 14);
+  text-shadow: 1px 1px rgb(90, 104, 116);
+}
+
+.outro-region {
+  width: 310px;
+  float: left;
+  margin: 1px;
+  padding: 5px;
+  text-align: center;
+}
+
+.outro-number {
+  font-size:75px;
+  color:#000;
 }

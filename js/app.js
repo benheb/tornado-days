@@ -166,7 +166,10 @@ torApp.prototype.scrollControls = function() {
       $('#scroll-helper').fadeIn('slow');
     }).on('mouseout', function() {
       $('#scroll-helper').fadeOut('slow');
-    })
+    });
+    
+    //outro height
+    $('#outro').css('height', h - 150 + 'px');
     
 }
 
@@ -433,6 +436,7 @@ torApp.prototype.LoadPoints = function( map ) {
       endLat: d.LiftoffLat, endLon: d.LiftoffLon, injuries: d.Injuries, fatalities: d.Fatalities}; })
     .get(function(error, rows) {
       var injured = 0;
+      var fatalities = 0;
       var cost = 0;
       var count = 0;
       
@@ -507,6 +511,7 @@ torApp.prototype.LoadPoints = function( map ) {
           .attr('opacity', 0.8)
           .attr('d', function(d) {
             injured = injured + parseInt( d.injuries );
+            //fatalities = fatalities + parseInt( d.fatalities );
             count++;
           })
           .attr('r', function(d) {
@@ -533,6 +538,8 @@ torApp.prototype.LoadPoints = function( map ) {
         //  $( '.'+map+' .number-of-tors .number' ).html( j );
         //  if ( j >= count ) clearInterval( countint );
         //}, 0.1);
+        //console.log('injured', injured)
+        //console.log('killed', fatalities)
         
         $( '.'+map+' .injured-by-tors .number' ).html( injured );
         $( '.'+map+' .number-of-tors .number' ).html( count );

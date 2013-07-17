@@ -85,10 +85,12 @@ torApp.prototype.scrollSetup = function() {
   scrollorama.animate('#map_eight_title',{ delay: 100, duration: 500, property:'left', start:-600,end:-4 });
   
   /*
-   * Footer
+   * 
+   * Outro
    * 
    */
-  scrollorama.animate('#footer',{ duration: 100, property:'height', start:0,end:160 });
+  scrollorama.animate('#footer',{ delay:height - 250, duration:120, property:'bottom', start:-300,end:0 });
+    
 
 }
 
