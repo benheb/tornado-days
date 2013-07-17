@@ -63,9 +63,18 @@ torApp.prototype.scrollControls = function() {
   });
   
   //map controls
-  $('#map-controls').css('top', h-55+'px').on('click', function() {
+  $('#map-controls').css('top', h-55+'px');
+  $('#toggle-paths').on('click', function() {
     self.drawLines( null, self.active );
   });
+  $('#next-section').on('click', function() {
+    var height = $(window).height() + 51;
+    var top = $(window).scrollTop();
+    var active = self.active;
+    var sections = { "map_one": 2, "map_two": 3, "map_three": 4, "map_four": 5, "map_five": 6, "map_six": 7, "map_seven": 8, "map_eight": 8 }
+    $('body,html').animate({scrollTop: ( height ) * sections[ active ] }, 2000); 
+  });
+  
   
   $window = $(window);
     var $bg = $('#home');
@@ -151,6 +160,14 @@ torApp.prototype.scrollControls = function() {
       var id = $(this).attr('id');
       self.stopVideo( id );
     });
+    
+    //scroll helper 
+    $('.pendulum').on('mouseover', function() {
+      $('#scroll-helper').fadeIn('slow');
+    }).on('mouseout', function() {
+      $('#scroll-helper').fadeOut('slow');
+    })
+    
 }
 
 /*

@@ -144,8 +144,7 @@ a:hover {
 }
 
 #map-controls {
-  padding: 5px;
-  background: #222;
+  padding: 3px;
   color: #777;
   font-size:8pt;
   position: fixed;
@@ -153,13 +152,25 @@ a:hover {
   cursor: pointer;
   z-index: 10000;
   overflow: hidden;
-  opacity: 0.6;
   display:none;
+  background: #222;
+  opacity: 0.6;
 }
 
-#map-controls:hover {
+.control {
+  background: #222;
+  padding:2px;
+  opacity: 0.6;
+  margin-right:3px;  
+}
+
+.control:hover {
   opacity:0.8;
   color:#FFFFFF;
+}
+
+#next-section {
+  border-left:1px dotted #999999;
 }
 
 #map_one_title {
@@ -371,6 +382,11 @@ path {
   background: #e7ece6 url( ../images/down-arrow.png ) no-repeat bottom;
 }
 
+#scroll-helper {
+  display:none;
+  font-size: 10pt;
+  width: 155px;
+}
 
 .date {
   background: #CCC;
