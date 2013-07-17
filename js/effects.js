@@ -29,7 +29,7 @@ torApp.prototype.scrollSetup = function() {
    */
   scrollorama.animate('#map_three_title',{ delay: 150, duration: 500, property:'left', start:-500,end:-2 });
   //scrollorama.animate('#section-three',{ duration: height, property:'top', start:-height,end:0 });
-  //scrollorama.animate('#joplin-image',{ duration: 600, property:'margin-left', start:345,end:0 });
+  scrollorama.animate('#joplin-about',{ delay: 650, duration: 100, property:'height', start:0,end:385 });
   
   /*
    * 

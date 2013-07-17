@@ -148,7 +148,7 @@ a:hover {
   color: #777;
   font-size:8pt;
   position: fixed;
-  left: 20px;
+  left: 0px;
   cursor: pointer;
   z-index: 10000;
   overflow: hidden;
@@ -171,15 +171,15 @@ a:hover {
 #map_two_title {
   right: 0px;
   text-align: left;
-  background: #AAA;
+  background: rgb(77, 85, 95);
   color: #FFFFFF;
   width:300px;
 }
 
 #map_four_title {
   right: 0px;
-  background:rgb(114, 114, 114);
-  color: #FFFFFF;
+  background:rgb(77, 85, 95);
+  color: #FEFEFE;
   width:400px;
 }
 
@@ -208,6 +208,21 @@ a:hover {
   width: 600px;
   width: 600px;
   text-align: right;
+}
+
+#joplin-about {
+  width: 298px;
+  top: 68px;
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  line-height: 38px;
+  background: #FEFEFE;
+  z-index: 100;
+  padding-left: 11px;
+  font-size: 11pt;
+  padding-right: 9px;
+  height: 285px;
 }
 
 .no-scroll {
@@ -507,10 +522,15 @@ path {
   width: 100%;
   font-size: 131px;
   text-align: center;
-  color: rgb(12, 10, 10);
+  color: rgb(8, 10, 14);
   position: fixed;
-  font-family: 'ff-spinoza-web-pro', 'Georgia', serif;
+  font-family: "Georgia", serif;
+  letter-spacing:2px;
   text-transform: uppercase;
+}
+
+.intro-diddy article {
+  text-shadow: 1px 1px rgb(90, 104, 116);
 }
 
 #intro-map-window-one .inner.wbg {

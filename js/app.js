@@ -169,7 +169,6 @@ torApp.prototype.createMap = function() {
     m = 0;
   
   var scale = w / 4;
-  console.log('scale', w)
   //Map Obj
   this.maps = {
     "map_one" : { 
@@ -253,7 +252,7 @@ torApp.prototype.addLand = function () {
   var self = this;
   
   d3.json("data/usa-detail.json", function(error, world) {
-    console.log('world', world)
+    //console.log('world', world)
     $.each( self.maps, function(i, map) {
       
       var projection = map[ "projection"];
@@ -498,10 +497,10 @@ torApp.prototype.LoadPoints = function( map ) {
             return size - 2;
           })
         .transition()
-        .duration(3600)
+        .duration(4100)
           .attr("transform", function(d) {
             return "translate(" + projection([d.longitude,d.latitude]) + ")";
-          })
+          });
         
         //Stats
         $( '.'+map+' .injured-by-tors .number' ).html( injured );
