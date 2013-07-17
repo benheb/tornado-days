@@ -130,6 +130,86 @@ a:hover {
   border-bottom: 1px solid #444;
 }
 
+.section-title {
+  position: absolute;
+  width: 300px;
+  background: rgb(240, 240, 240);
+  z-index: 1000;
+  padding: 10px;
+  font-size: 16pt;
+  text-align: right;
+  top: 25px;
+  box-shadow: 0px 0px 10px -3px #333;
+}
+
+#map-controls {
+  padding: 5px;
+  background: #222;
+  color: #777;
+  font-size:8pt;
+  position: fixed;
+  left: 20px;
+  cursor: pointer;
+  z-index: 10000;
+  overflow: hidden;
+  opacity: 0.6;
+  display:none;
+}
+
+#map-controls:hover {
+  opacity:0.8;
+  color:#FFFFFF;
+}
+
+#map_one_title {
+  left: -3px;
+  width: 600px;
+  width: 600px;
+  text-align: right;
+}
+
+#map_two_title {
+  right: 0px;
+  text-align: left;
+  background: #AAA;
+  color: #FFFFFF;
+  width:300px;
+}
+
+#map_four_title {
+  right: 0px;
+  background:rgb(114, 114, 114);
+  color: #FFFFFF;
+  width:400px;
+}
+
+#map_five_title {
+  left: -3px;
+  width: 600px;
+  width: 600px;
+  text-align: right;
+}
+
+#map_six_title {
+  right: 0px;
+  top: 600px;
+  text-align: left;
+}
+
+#map_seven_title {
+  top: 0px;
+  width: 255px;
+  text-align: center;
+  left: 20px;
+}
+
+#map_eight_title {
+  left: -3px;
+  width: 600px;
+  width: 600px;
+  text-align: right;
+}
+
 .no-scroll {
   position: fixed !important; 
   overflow-y: scroll;
@@ -273,9 +353,9 @@ path {
 
 .date {
   background: #CCC;
-  opacity: 0.8;
+  opacity: 1;
   padding: 5px;
-  color: rgb(0, 136, 196); /*was #000 */
+  color: rgb(39, 127, 238); /*rgb(0, 136, 196); /*was #000 */
   margin-bottom: 10px;
   display: block;
   text-align: center;
