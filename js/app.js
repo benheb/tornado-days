@@ -503,8 +503,21 @@ torApp.prototype.LoadPoints = function( map ) {
           });
         
         //Stats
-        $( '.'+map+' .injured-by-tors .number' ).html( injured );
-        $( '.'+map+' .number-of-tors .number' ).html( count );
+        var i = 0;
+        var injint = setInterval(function() {
+          i++;
+          $( '.'+map+' .injured-by-tors .number' ).html( i );
+          if ( i >= injured ) clearInterval( injint );
+        }, 1);
+        
+        var j = 0;
+        var countint = setInterval(function() {
+          j++;
+          $( '.'+map+' .number-of-tors .number' ).html( j );
+          if ( j >= count ) clearInterval( countint );
+        }, 1);
+        
+        
       });
 }
 
