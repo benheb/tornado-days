@@ -176,6 +176,10 @@ a:hover {
   border-left:1px dotted #999999;
 }
 
+#toggle-paths {
+  color:#FFFFFF;
+}
+
 #map_one_title {
   left: -3px;
   width: 600px;
@@ -417,7 +421,7 @@ path {
   width: 95px;
   text-align: center;
   margin-right: 3px;
-  font-size:20pt;
+  font-size:18pt;
 }
 
 .stat .title {
@@ -758,7 +762,8 @@ path {
   padding-top:10px;
   height:650px;
   width:100%;
-  background: url(../images/intro-tornado.jpg) no-repeat center center fixed;
+  color:rgb(90, 99, 105);
+  background: url(../images/outro-tornado.jpg) no-repeat center center fixed;
 }
 #outro-inner {
   width:990px;
@@ -771,8 +776,7 @@ path {
   font-size: 14pt;
   margin: 5px;
   margin-left: 0px;
-  color: rgb(8, 10, 14);
-  text-shadow: 1px 1px rgb(90, 104, 116);
+  color: rgb(90, 99, 105);
   text-align: center;
   display: block;
   margin-top: 235px;
@@ -783,15 +787,13 @@ path {
   font-size: 27pt;
   margin: 5px;
   margin-left: 0px;
-  color: rgb(8, 10, 14);
-  text-shadow: 1px 1px rgb(90, 104, 116);
+  color: rgb(90, 99, 105);
 }
 
 #outro h1 {
   font-family: "Georgia", serif;
   font-size: 55pt;
-  color: rgb(8, 10, 14);
-  text-shadow: 1px 1px rgb(90, 104, 116);
+  color: rgb(90, 99, 105);
 }
 
 .outro-region {
@@ -804,5 +806,5 @@ path {
 
 .outro-number {
   font-size:75px;
-  color:#000;
+  color: rgb(90, 99, 105);
 }

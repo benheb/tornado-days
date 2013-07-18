@@ -93,9 +93,3 @@ torApp.prototype.scrollSetup = function() {
     
 
 }
-
-torApp.prototype.showTitle = function( id ) {
-  //setTimeout( function() {
-  //  $('#'+id+'_title').show().addClass('magictime perspectiveDownRetourn');  
-  //}, 600)
-}
