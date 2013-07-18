@@ -241,7 +241,7 @@ a:hover {
   position: absolute;
   left: 0px;
   line-height: 38px;
-  background: #FEFEFE;
+  background: #E9E9E9;
   z-index: 100;
   padding-left: 11px;
   font-size: 11pt;
@@ -328,7 +328,7 @@ path {
 
 .subunit-label {
   fill: #777;
-  fill-opacity: .5;
+  fill-opacity: .8;
   font-size: 10px;
   font-weight: 300;
   text-anchor: middle;
@@ -807,4 +807,14 @@ path {
 .outro-number {
   font-size:75px;
   color: rgb(90, 99, 105);
+}
+
+#loading {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  font-size: 12pt;
+  color: #444;
+  font-family: "Helvetica Neue, "Helvetica", ""arial";
+  z-index: 1000;
 }

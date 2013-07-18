@@ -46,6 +46,7 @@ torApp.prototype.intro = function() {
   });
   
   function animation() {
+    $('#loading').hide();
     self.intro_svg.transition()
         .duration(7000)
         .style('opacity', 1)
