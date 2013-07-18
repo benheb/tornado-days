@@ -552,7 +552,7 @@ path {
   font-size: 131px;
   text-align: center;
   color: rgb(8, 10, 14);
-  position: fixed;
+  position: absolute;
   font-family: "Georgia", serif;
   letter-spacing:2px;
   text-transform: uppercase;

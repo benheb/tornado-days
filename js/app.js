@@ -123,6 +123,15 @@ torApp.prototype.scrollControls = function() {
           self.RemovePoints();
       }
       
+      //HUGE FIX FOR CHROME FIXED POSITION BG IMAGES
+      if ( pos < 10 ) {
+        $('.intro-diddy').css('position','absolute');
+      } else if ( pos > h ) {
+        $('.intro-diddy').css('position','relative');
+      } else {
+        $('.intro-diddy').css('position','fixed');
+      }
+      
       this.prev_pos = pos;
       
       clearTimeout($.data(this, "scrollTimer"));
