@@ -149,7 +149,6 @@ torApp.prototype.scrollControls = function() {
       
       //set current visible section
       self.active = id;
-      self.showTitle( id );
       self.playVideo( id );  
       self.LoadPoints( id );
       $(this).addClass('viewed');
