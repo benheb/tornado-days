@@ -1,7 +1,7 @@
 {
   "name": "tornado-days",
   "version": "0.1.0",
-  "homepage": "https://github.com/benheb/tornado-days",
+  "homepage": "https://github.com/heroku/node-js-sample",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
