@@ -1,11 +1,13 @@
 {
-  "name": "my-project-name",
+  "name": "tornado-days",
   "version": "0.1.0",
+  "homepage": "https://github.com/benheb/tornado-days",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-imagemin": "~0.1.4"
+    "grunt-contrib-imagemin": "~0.1.4",
+    "grunt-geo": "~0.1.4"
   }
 }

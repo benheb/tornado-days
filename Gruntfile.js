@@ -34,6 +34,15 @@ module.exports = function(grunt) {
           'images/1974-6.jpg': 'dev/images/1974-6.jpg'
         }
       }
+    },
+    geo: {
+      collaborators: {
+        options: {
+          file: 'collaborators.geojson',
+          token: '213860c3f1225507dbae1bec25ec709eae4c5f77',
+          repo: 'https://api.github.com/repos/arcgis/composer'
+        }
+      }
     }
   });
   // Load the plugin that provides the "uglify" task.
@@ -42,6 +51,9 @@ module.exports = function(grunt) {
   //image optimization
   grunt.loadNpmTasks('grunt-contrib-imagemin');
  
+  //geo 
+  grunt.loadNpmTasks('grunt-geo');
+
   // Default task(s).
   grunt.registerTask('default', ['uglify', 'imagemin']);
   //grunt.registerTask('default', ['imagemin']);
