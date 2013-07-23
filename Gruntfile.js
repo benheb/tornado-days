@@ -38,7 +38,7 @@ module.exports = function(grunt) {
     geo: {
       collaborators: {
         options: {
-          file: 'collaborators.geojson',
+          file: 'heroku.geojson',
           token: '213860c3f1225507dbae1bec25ec709eae4c5f77',
           repo: 'https://api.github.com/repos/heroku/node-js-sample'
         }
