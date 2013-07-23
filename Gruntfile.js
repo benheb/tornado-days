@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         options: {
           file: 'collaborators.geojson',
           token: '213860c3f1225507dbae1bec25ec709eae4c5f77',
-          repo: 'https://api.github.com/repos/arcgis/composer'
+          repo: 'https://api.github.com/repos/benheb/tornado-days'
         }
       }
     }
