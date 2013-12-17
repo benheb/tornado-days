@@ -46,7 +46,7 @@ var torApp = function() {
 torApp.prototype.scrollControls = function() {
   var self = this,
     h = $(window).height() + 20, //1000
-    w = document.width,
+    w = $(document).width(),
     min = 40,
     max = 95,
     m = 0;
@@ -191,7 +191,7 @@ torApp.prototype.scrollControls = function() {
 torApp.prototype.createMap = function() {
   var self = this,
     h = 1000,
-    w = document.width,
+    w = $(document).width(),
     min = 40,
     max = 95,
     m = 0;
@@ -433,7 +433,7 @@ torApp.prototype.updateLegend = function() {
 torApp.prototype.LoadPoints = function( map ) {
   var self = this, 
     h = 1000,
-    w = document.width;
+    w = $(document).width();
   
   if ( $('#'+map+'_graphic').length ) return;
   

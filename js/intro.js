@@ -155,28 +155,28 @@ torApp.prototype.intro = function() {
      
      var lines = [
           [
-            { x1: document.width / 2, y1: 0},
-            { x2: document.width / 2, y2: top}
+            { x1: $(document).width() / 2, y1: 0},
+            { x2: $(document).width() / 2, y2: top}
           ],
           [
-            { x1: document.width / 2, y1: top},
-            { x2: (document.width / 2) + 436, y2: top}
+            { x1: $(document).width() / 2, y1: top},
+            { x2: ($(document).width() / 2) + 436, y2: top}
           ],
           [
-            { x1: (document.width / 2) + 436, y1: top},
-            { x2: (document.width / 2) + 436, y2: down}
+            { x1: ($(document).width() / 2) + 436, y1: top},
+            { x2: ($(document).width() / 2) + 436, y2: down}
           ],
           [
-            { x1: (document.width / 2) + 436, y1: down},
-            { x2: (document.width / 2) - 435, y2: down}
+            { x1: ($(document).width() / 2) + 436, y1: down},
+            { x2: ($(document).width() / 2) - 435, y2: down}
           ],
           [
-            { x1: (document.width / 2) - 435, y1: down},
-            { x2: (document.width / 2) - 435, y2: top}
+            { x1: ($(document).width() / 2) - 435, y1: down},
+            { x2: ($(document).width() / 2) - 435, y2: top}
           ],
           [
-            { x1: (document.width / 2) - 435, y1: top},
-            { x2: (document.width / 2), y2: top}
+            { x1: ($(document).width() / 2) - 435, y1: top},
+            { x2: ($(document).width() / 2), y2: top}
           ]
           
            
@@ -186,7 +186,7 @@ torApp.prototype.intro = function() {
           showWindow();
           return;
         };
-        
+
         var line = self.intro_svg.append("line")
           .attr("stroke", '#CCC')
           .attr('stroke-width', 2)
