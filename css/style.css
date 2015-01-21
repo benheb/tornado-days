@@ -12,6 +12,11 @@ a:hover {
   display: none; 
 }
 
+.map-svg {
+  width:100%;
+  height:100%;
+}
+
 #header {
   background: none;
   height: 48px;

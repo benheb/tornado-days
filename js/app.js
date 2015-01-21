@@ -251,7 +251,7 @@ torApp.prototype.createMap = function() {
   var maps = [ "map_one", "map_two", "map_three", "map_four", "map_five", "map_six", "map_seven", "map_eight" ];
   $.each( this.maps, function( i, map) {
     var id = map.id;
-    self[ id ] = d3.select("#"+ id).append("svg");
+    self[ id ] = d3.select("#"+ id).append("svg").attr('class', 'map-svg');
   });
   
   //Master Legend
